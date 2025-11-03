@@ -1,10 +1,4 @@
-export interface Theme {
-  name: string;
-  element: string;
-  bodyClass: string;
-  bgColor: string;
-  textColor: string;
-}
+import type { Theme } from './model/types';
 
 export const themeConfig = {
   defaultTheme: 'light',

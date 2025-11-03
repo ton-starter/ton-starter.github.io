@@ -1,5 +1,5 @@
-import { authConfig } from './config';
-import type { AuthProvider, AuthProviderConfig } from './_auth.types';
+import { authConfig } from './auth.config';
+import type { AuthProvider, AuthProviderConfig } from './model/types';
 
 export class SessionAuthProvider implements AuthProvider {
   constructor(private readonly config: AuthProviderConfig = authConfig) {}

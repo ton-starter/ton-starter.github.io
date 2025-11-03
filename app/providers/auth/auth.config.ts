@@ -1,4 +1,4 @@
-import type { AuthProviderConfig } from '../_auth.types';
+import type { AuthProviderConfig } from './model/types';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'dev';
@@ -15,14 +15,14 @@ export const authConfig: AuthProviderConfig = {
       name: 'user_auth',
       secure: isProduction || isDev,
       sameSite: isProduction ? 'lax' : 'none',
-      maxAge: 60 * 60 * 24 * 365 * 5, // 5 лет
+      maxAge: 60 * 60 * 24 * 365 * 5, // 5 years
       path: '/',
     },
     session: {
       name: 'october_session',
       secure: isProduction || isDev,
       sameSite: isProduction ? 'lax' : 'none',
-      maxAge: 60 * 60 * 24 * 30, // 1 месяц
+      maxAge: 60 * 60 * 24 * 30, // 1 month
       path: '/',
     },
   },

@@ -1,4 +1,4 @@
-import { authConfig } from '../config';
+import { authConfig } from '../auth.config';
 import type { AuthApi } from './types';
 
 export const authApi: AuthApi = {

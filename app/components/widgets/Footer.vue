@@ -1,31 +1,7 @@
 <script setup lang="ts">
-const linksColumns = ref([
-  {
-    title: 'Документы',
-    links: [
-      {
-        name: 'Оферта',
-        url: '/articles/dogovor-oferta-polzovatelya-nft-platformy',
-      },
-      { name: 'Процесс оплаты', url: '/articles/informatsiya-ob-oplate' },
-      {
-        name: 'Правила сервиса',
-        url: '/articles/pravila-ispolzovaniya-sayta',
-      },
-      {
-        name: 'Обработка данных',
-        url: '/articles/obrabotka-personalnykh-dannykh',
-      },
-    ],
-  },
-  {
-    title: 'О компании',
-    links: [
-      { name: 'Партнеры', url: '/#partners' },
-      { name: 'Пресса о нас', url: '/#press' },
-    ],
-  },
-]);
+import { footerLinks, type FooterColumn } from '~~/data/footerLinks';
+
+const linksColumns = ref<FooterColumn[]>(footerLinks);
 </script>
 <template>
   <footer class="footer">
