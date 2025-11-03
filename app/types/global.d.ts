@@ -17,7 +17,7 @@ declare global {
     is_activated: boolean;
     username: string;
     legal_type: string;
-    phone: string; 
+    phone: string;
     refer_id: any;
     referral_percent: number;
     wallet_address: string;
@@ -47,7 +47,7 @@ declare global {
     logo?: any;
     banner?: Banner;
   }
-  
+
   interface CompanyEntity {
     id: number;
     created_at: string;
@@ -89,6 +89,7 @@ declare global {
     path: string;
     extension: string;
   }
+
   interface Banner {
     id: number;
     disk_name: string;
@@ -248,6 +249,7 @@ declare global {
     slug: string;
     image?: Image;
   }
+
   interface Image {
     id: number;
     disk_name: string;
@@ -263,6 +265,7 @@ declare global {
     path: string;
     extension: string;
   }
+
   interface Author {
     id: number;
     is_activated: boolean;
@@ -272,6 +275,7 @@ declare global {
     legal: LegalEntity;
     avatar: Avatar;
   }
+
   interface Preview {
     id: number;
     disk_name: string;
@@ -287,6 +291,7 @@ declare global {
     path: string;
     extension: string;
   }
+
   interface Background {
     id: number;
     disk_name: string;
@@ -302,12 +307,14 @@ declare global {
     path: string;
     extension: string;
   }
+
   interface ModerationStatus {
     id: number;
     created_at: string;
     updated_at: string;
     name: string;
   }
+
   interface UploadFile {
     id: number;
     disk_name: string;
@@ -323,6 +330,7 @@ declare global {
     path: string;
     extension: string;
   }
+
   interface PreviewUpload {
     id: number;
     disk_name: string;
@@ -338,6 +346,7 @@ declare global {
     path: string;
     extension: string;
   }
+
   interface DefaultOctoberPage {
     id: number;
     name: string;
@@ -346,6 +355,7 @@ declare global {
     order: number;
     slug: string;
   }
+
   interface Video {
     id: number;
     disk_name: string;

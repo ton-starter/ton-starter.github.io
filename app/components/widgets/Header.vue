@@ -1,7 +1,5 @@
-
-<script lang="ts" setup> 
-import Icon from '../shared/Icon.vue'; 
-  
+<script lang="ts" setup>
+import Icon from '../shared/Icon.vue';
 </script>
 <template>
   <header class="header">
@@ -15,18 +13,16 @@ import Icon from '../shared/Icon.vue';
             alt="logo-header"
           />
           <Icon name="logo-header" folder="logo" :size="140" />
-        </NuxtLink> 
+        </NuxtLink>
         <!-- <UserProfileMenuPanel /> -->
       </div>
     </div>
-  </header> 
+  </header>
 </template>
-
 
 <style lang="scss">
 .header {
   background: #fff;
   border-bottom: 1px solid #e1d8f1;
-   
 }
 </style>

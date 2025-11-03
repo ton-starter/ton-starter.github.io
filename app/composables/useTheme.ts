@@ -1,4 +1,4 @@
-import { themeConfig, type ThemeKey } from '~/providers/theme/theme.config.ts';
+import { themeConfig, type ThemeKey } from '~/providers/theme/theme.config';
 
 export const useTheme = () => {
   const theme = useState<ThemeKey>('theme', () => themeConfig.defaultTheme);

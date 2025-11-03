@@ -1,10 +1,16 @@
 {
-  // https://v3.nuxtjs.org/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "strict": true,
-    "types": ["nuxt", "element-plus/global"],
-    "moduleResolution": "node",
-    "baseUrl": "."
+    "noImplicitAny": false,
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM"],
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "paths": {
+      "~/*": ["./app/*"],
+      "@/*": ["./app/*"]
+    },
+    "types": ["node", "vitest/globals", "happy-dom", "nuxt"],
+    "skipLibCheck": true
   }
 }

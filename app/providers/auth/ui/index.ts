@@ -5,3 +5,5 @@
 //   ModalLogin,
 //   ModalRegister,
 // };
+
+export const authUi = {} as const;

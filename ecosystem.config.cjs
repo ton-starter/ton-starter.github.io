@@ -10,8 +10,8 @@ module.exports = {
         NUXT_PUBLIC_BASE_URL: process.env.NUXT_PUBLIC_BASE_URL,
         NUXT_PUBLIC_API_BASE_URL: process.env.NUXT_PUBLIC_API_BASE_URL,
         NUXT_PUBLIC_WS_BASE_URL: process.env.NUXT_PUBLIC_WS_BASE_URL,
-        NODE_ENV: 'dev'
-      }
+        NODE_ENV: 'dev',
+      },
     },
   ],
 };

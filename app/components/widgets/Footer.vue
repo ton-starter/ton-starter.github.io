@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const linksColumns = ref([ 
+const linksColumns = ref([
   {
     title: 'Документы',
     links: [
@@ -42,11 +42,7 @@ const buildTime = __BUILD_TIME__;
           </NuxtLink>
           <div class="footer-social-network-logos-second hide-sm">
             <div class="social-items">
-              <a
-                class="telegram-logo"
-                target="_blank"
-                href="https://t.me/demo"
-              >
+              <a class="telegram-logo" target="_blank" href="https://t.me/demo">
                 <Icon
                   name="telegram"
                   folder="general/soc-icons"
@@ -116,6 +112,7 @@ const buildTime = __BUILD_TIME__;
   </footer>
 </template>
 
-<style lang="scss"  >
-.footer { }
+<style lang="scss">
+.footer {
+}
 </style>

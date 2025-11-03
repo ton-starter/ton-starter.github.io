@@ -14,7 +14,12 @@ export default defineNuxtConfig({
     '@/assets/styles/fonts.scss',
   ],
 
-  modules: ['@pinia/nuxt', '@element-plus/nuxt', '@nuxtjs/i18n'],
+  modules: [
+    '@nuxt/test-utils',
+    '@pinia/nuxt',
+    '@element-plus/nuxt',
+    '@nuxtjs/i18n',
+  ],
 
   elementPlus: {
     importStyle: 'scss',

@@ -1,3 +1,5 @@
+import type { AuthProviderConfig } from '../_auth.types';
+
 const isProduction = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'dev';
 

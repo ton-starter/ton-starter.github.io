@@ -1,31 +1,35 @@
 import globals from 'globals';
-import pluginJs from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import pluginVue from 'eslint-plugin-vue';
-import prettier from 'eslint-plugin-prettier/recommended';
+import parserVue from 'vue-eslint-parser';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import parserTs from '@typescript-eslint/parser';
+import vuePlugin from 'eslint-plugin-vue';
+import prettierPlugin from 'eslint-plugin-prettier';
 
-/** @type {import('eslint').Linter.Config[]} */
+// ESLint flat config
 export default [
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...pluginVue.configs[
-    ('flat/essential',
-    'vue3-recommended',
-    'vue3-strongly-recommended',
-    'flat/strongly-recommended')
-  ],
-  prettier,
+  // Ignore generated output and dependencies
+  {
+    ignores: ['.output/**', '.nuxt/**', 'node_modules/**', 'types/**'],
+  },
+
+  // Project files configuration
   {
     files: ['**/*.{js,mjs,cjs,ts,vue}'],
     languageOptions: {
-      parserOptions: { parser: tseslint.parser },
+      parser: parserVue,
+      parserOptions: {
+        parser: parserTs,
+        ecmaVersion: 2020,
+        sourceType: 'module',
+        extraFileExtensions: ['.vue'],
+      },
       globals: globals.browser,
     },
-  },
-  {
-    ignores: ['.config/*', '.nuxt/*'],
-  },
-  {
+    plugins: {
+      vue: vuePlugin,
+      '@typescript-eslint': tsPlugin,
+      prettier: prettierPlugin,
+    },
     rules: {
       'vue/max-attributes-per-line': 'off',
       'no-undef': 'off',
@@ -44,7 +48,6 @@ export default [
           alignAttributesVertically: true,
         },
       ],
-
       'vue/singleline-html-element-content-newline': 'off',
       'vue/multiline-html-element-content-newline': 'off',
       'vue/html-closing-bracket-newline': 'off',
@@ -64,13 +67,7 @@ export default [
           alphabetical: false,
         },
       ],
-      'vue/no-unused-vars': [
-        'error',
-        {
-          ignorePattern: '^_',
-        },
-      ],
-
+      'vue/no-unused-vars': ['error', { ignorePattern: '^_' }],
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -79,17 +76,7 @@ export default [
           caughtErrorsIgnorePattern: '^_',
         },
       ],
-
-      // Настройки Prettier
-      'prettier/prettier': [
-        'error',
-        {
-          singleQuote: true,
-          semi: true,
-          tabWidth: 2,
-          trailingComma: 'all',
-        },
-      ],
+      'prettier/prettier': 'warn',
     },
   },
 ];

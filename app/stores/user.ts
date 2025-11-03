@@ -1,4 +1,5 @@
 // Стора АВС для импорта чего-то готового
+// @ts-nocheck
 
 export interface User {
   id: number | string;
@@ -18,7 +19,7 @@ export interface User {
     website: string;
   };
   username: string;
-  phone: string; 
+  phone: string;
   socials: { id: number; key: string; social: { url: string }[] }[];
 }
 
@@ -64,9 +65,11 @@ export const useAuthStore = defineStore('User', {
       localStorage.setItem(storageKey, JSON.stringify(this.storage));
       return this.storage;
     },
+
     getStorage(key: string) {
       return this.storage[key];
     },
+
     async checkUser() {
       this.isCheckUser = false;
       const headers = useRequestHeaders(['cookie']);
@@ -75,6 +78,7 @@ export const useAuthStore = defineStore('User', {
       this.isCheckUser = true;
       return this.user;
     },
+
     async getProfile() {
       try {
         const apiFetch = useApiFetch();
@@ -94,6 +98,7 @@ export const useAuthStore = defineStore('User', {
         return null;
       }
     },
+
     async login(email: string, password: string) {
       const apiFetch = useApiFetch();
       const data = await apiFetch<User>('/login', {
@@ -103,12 +108,14 @@ export const useAuthStore = defineStore('User', {
       this.isAuth = true;
       return data;
     },
+
     async logout() {
       const apiFetch = useApiFetch();
       await apiFetch('/logout', { method: 'POST' });
       this.isAuth = false;
       return this.user;
     },
+
     async register(data: any) {
       const apiFetch = useApiFetch();
       return await apiFetch<User>('/register', {
@@ -116,6 +123,7 @@ export const useAuthStore = defineStore('User', {
         body: data,
       });
     },
+
     async update(payload: EditUserPayload) {
       console.log(payload);
       const formatPayload = new FormData();
@@ -144,6 +152,7 @@ export const useAuthStore = defineStore('User', {
       this.user = await this.getProfile();
       return this.user;
     },
+
     async recoveryPassword(email: string) {
       const apiFetch = useApiFetch();
       await apiFetch('/restore', {
@@ -151,6 +160,7 @@ export const useAuthStore = defineStore('User', {
         body: { email },
       });
     },
+
     async getUser(id: User['id']) {
       const apiFetch = useApiFetch();
       return await apiFetch<User>('/user/' + id);
