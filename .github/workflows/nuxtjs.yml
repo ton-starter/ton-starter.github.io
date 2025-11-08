@@ -1,4 +1,4 @@
-name: Deploy Nuxt 3 to GitHub Pages
+name: Deploy Nuxt 3 SPA to GitHub Pages
 
 on:
   push:
@@ -9,10 +9,6 @@ permissions:
   contents: read
   pages: write
   id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   build:
@@ -30,8 +26,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build with Nuxt 3 (Static)
-        run: npx nuxt build --preset github_pages
+      - name: Build as SPA (без SSR)
+        run: |
+          npm run build
         env:
           NUXT_APP_BASE_URL: "https://klimov-rv.github.io/ton-starter/"
 
@@ -41,7 +38,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./.output/public
+          path: ./dist
 
   deploy:
     environment:
