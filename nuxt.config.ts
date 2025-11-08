@@ -1,6 +1,5 @@
 import { resolve } from 'path';
-// import appStamp from './app/buildTime.js';
-// import appStamp from './buildTime.js'; // путь изменился
+import __BUILD_TIME__ from './app/buildTime.js';
 import appSEO from './data/seo.json';
 
 export default defineNuxtConfig({
@@ -100,8 +99,7 @@ export default defineNuxtConfig({
       },
     },
     define: {
-      // __BUILD_TIME__: appStamp,
-      __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+      __BUILD_TIME__,
     },
   },
 
@@ -110,14 +108,6 @@ export default defineNuxtConfig({
     defaultLocale: 'ru',
     bundle: {
       optimizeTranslationDirective: false,
-    },
-  },
-
-  // пререндер для статического хостинга github-pages
-  nitro: {
-    prerender: {
-      crawlLinks: true,
-      routes: ['/', '/getting-started', '/404'],
     },
   },
 });
