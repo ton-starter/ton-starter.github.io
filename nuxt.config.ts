@@ -73,16 +73,6 @@ export default defineNuxtConfig({
     port: 3030,
   },
 
-  ssr: false,
-  target: 'static',
-
-  nitro: {
-    static: true,
-    prerender: {
-      routes: ['/'],
-    },
-  },
-
   compatibilityDate: '2025-01-23',
   devtools: { enabled: true },
 

@@ -7,7 +7,7 @@
       Скачай TON Wallet из официального источника и создай новый кошелёк.
       Сохрани секретные слова безопасно.
     </p>
-    <a class="btn" href="ton.org/wallets" target="_blank">
+    <a class="btn" href="https://ton.org/wallets" target="_blank">
       Установить Wallet
     </a>
   </section>
