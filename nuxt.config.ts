@@ -101,7 +101,7 @@ export default defineNuxtConfig({
     },
     define: {
       // __BUILD_TIME__: appStamp,
-      __BUILD_TIME__: `${new Date().toISOString()}`,
+      __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
     },
   },
 
