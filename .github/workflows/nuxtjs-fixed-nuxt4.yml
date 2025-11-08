@@ -18,6 +18,14 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           static_site_generator: nuxt
+      - name: Debug environment
+        run: |
+          echo "Node version: $(node -v)"
+          echo "NPM version: $(npm -v)"
+          echo "=== Global packages ==="
+          npm list -g --depth=0
+          echo "=== Project structure after move ==="
+          find . -name "*.vue" | grep -E "(component|element)" | head -10
       - name: Install dependencies
         run: npm install
       - name: Clean Nuxt cache
@@ -29,8 +37,6 @@ jobs:
         run: |
           echo "=== Installed Element Plus ==="
           npm list element-plus @element-plus/nuxt
-          echo "=== Nuxt modules ==="
-          npx nuxi module list
       - name: Static HTML export with Nuxt
         run: npm run build:gh-pages
       # - run: npx nuxt build:gh-pages --preset github_pages
