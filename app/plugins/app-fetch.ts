@@ -1,7 +1,9 @@
+// import { authAPI } from '../components/features/auth/api/auth.api';
+import { articlesAPI } from '../components/features/articles/api/articles.api';
+
 interface DemoErrorResponse {
   status: number;
   statusText?: string;
-
   [key: string]: any;
 }
 
@@ -9,15 +11,10 @@ interface FetchHooksErrorParams {
   response: DemoErrorResponse;
 }
 
-// import { authAPI } from '../components/features/auth/api/auth.api';
-import { articlesAPI } from '../components/features/articles/api/articles.api';
-
 export default defineNuxtPlugin({
   name: 'app-fetch',
-  parallel: true,
-  async setup(nuxtApp) {
+  async setup(_nuxtApp) {
     const config = useRuntimeConfig();
-
     const appFetch = $fetch.create({
       baseURL: config.public.apiBaseUrl,
       headers: {
@@ -25,21 +22,19 @@ export default defineNuxtPlugin({
       },
       async onResponseError({ response }: FetchHooksErrorParams) {
         const { status, statusText } = response;
-
-        if (status === 401) {
-          nuxtApp.runWithContext(() => navigateTo('/modal-login-path'));
-        }
-
-        // 422, информативная ошибка
-        if (status === 422) {
-          console.error(statusText);
-          nuxtApp.runWithContext(() => navigateTo('/modal-error-path'));
+        // console.error(statusText);
+        // _nuxtApp.runWithContext(() => navigateTo('/modal-error-path'));
+        if ([401, 422, 404, 500].includes(status)) {
+          throw createError({
+            statusCode: status,
+            statusMessage: statusText || 'Error',
+            fatal: true,
+          });
         }
       },
     });
 
     const mainResources = {
-      // auth: authAPI(appFetch),
       articles: articlesAPI(appFetch),
     };
 
@@ -52,14 +47,11 @@ export default defineNuxtPlugin({
   },
 });
 
-declare module 'nuxt/app' {
+declare module '#app' {
   interface NuxtApp {
-    $appFetch<T>(
-      url: NitroFetchRequest,
-      payload?: any,
-      options?: NitroFetchOptions<'json'>,
-    ): Promise<T>;
-
-    $mainResources;
+    $appFetch: typeof $fetch;
+    $mainResources: {
+      articles: ReturnType<typeof articlesAPI>;
+    };
   }
 }
