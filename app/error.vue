@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { NuxtError } from '#app';
 
 interface ErrorProps {
@@ -25,23 +25,15 @@ const isDev = process.env.NODE_ENV === 'development';
 
 <template>
   <div class="error-container">
-    <!-- Код ошибки -->
-    <h1 class="error-code">Код ошибки {{ statusCode }}</h1>
-
-    <!-- Заголовок ошибки -->
-    <h2 class="error-title">Заголовок ошибки {{ statusMessage }}</h2>
-
-    <!-- Описание ошибки -->
-    <p class="error-description">Описание ошибки {{ description }}</p>
+    <h1 class="error-code">{{ statusCode }}</h1>
+    <h2 class="error-title">{{ statusMessage }}</h2>
+    <p class="error-description">{{ description }}</p>
 
     <!-- Детали ошибки (только в режиме разработки) -->
-    <div v-if="isDev" class="error-details">
-      <p><strong>Message:</strong> {{ message }}</p>
-      <p><strong>Status Code:</strong> {{ statusCode }}</p>
-      <p><strong>Status Message:</strong> {{ statusMessage }}</p>
-    </div>
+    <n-alert v-if="isDev" :title="message" type="error">
+      <pre v-html="error"></pre>
+    </n-alert>
 
-    <!-- Кнопки навигации -->
     <div class="error-actions">
       <NuxtLink to="/" class="error-button primary">Back to Home</NuxtLink>
       <button class="error-button secondary" @click="$router.back()">
@@ -51,7 +43,7 @@ const isDev = process.env.NODE_ENV === 'development';
   </div>
 </template>
 
-<style scoped>
+<style>
 .error-container {
   padding: 60px 20px;
   text-align: center;
@@ -108,7 +100,6 @@ const isDev = process.env.NODE_ENV === 'development';
   padding: 12px 24px;
   border-radius: 4px;
   font-weight: 500;
-  transition: background 0.2s;
   cursor: pointer;
 }
 

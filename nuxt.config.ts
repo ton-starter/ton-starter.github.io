@@ -3,7 +3,7 @@ import __BUILD_TIME__ from './app/buildTime.js';
 import appSEO from './data/seo.json';
 
 export default defineNuxtConfig({
-  compatibilityDate: '2025-01-23',
+  compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   srcDir: './app',
   rootDir: __dirname,
@@ -14,12 +14,7 @@ export default defineNuxtConfig({
 
   css: ['~/assets/styles/main.scss'],
 
-  modules: [
-    '@nuxt/test-utils',
-    '@pinia/nuxt',
-    '@element-plus/nuxt',
-    '@nuxtjs/i18n',
-  ],
+  modules: ['@nuxt/test-utils', '@element-plus/nuxt', '@nuxtjs/i18n'],
 
   elementPlus: {
     importStyle: 'scss',
@@ -98,5 +93,4 @@ export default defineNuxtConfig({
       optimizeTranslationDirective: false,
     },
   },
-  ssr: false,
 });
