@@ -5,7 +5,9 @@ const buildTime = __BUILD_TIME__ || 'date err';
 </script>
 
 <template>
-  <span class="build-timestamp"> assembly stamp: {{ buildTime }} </span>
+  <span class="build-timestamp" aria-hidden="true">
+    assembly stamp: {{ buildTime }}
+  </span>
 </template>
 
 <style lang="scss">

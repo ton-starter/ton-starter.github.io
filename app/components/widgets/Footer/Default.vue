@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 <template>
   <footer class="footer">
-    <div class="mt-1-rem mb-1-rem p-1-rem" aria-hidden="true">
+    <div class="mt-1-rem mb-1-rem p-1-rem">
       <Copyrights />
       <br />
       <BuildTime />
