@@ -1,7 +1,11 @@
 <script setup lang="ts"></script>
 <template>
   <footer class="footer">
-    <BuildTime />
+    <div class="mt-1-rem mb-1-rem p-1-rem" aria-hidden="true">
+      <Copyrights />
+      <br />
+      <BuildTime />
+    </div>
   </footer>
 </template>
 

@@ -5,22 +5,7 @@ const buildTime = __BUILD_TIME__ || 'date err';
 </script>
 
 <template>
-  <div class="mt-1-rem mb-1-rem p-1-rem" aria-hidden="true">
-    <div class="show-flex flex-between">
-      <span> © 2025 TON Starter Guide. </span>
-      &lt;
-      <a
-        href="https://github.com/ton-starter/ton-starter.github.io/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Github
-      </a>
-      &nbsp;<IconGithub />/&gt;
-    </div>
-    <br />
-    <span class="build-timestamp"> assembly stamp: {{ buildTime }} </span>
-  </div>
+  <span class="build-timestamp"> assembly stamp: {{ buildTime }} </span>
 </template>
 
 <style lang="scss">
