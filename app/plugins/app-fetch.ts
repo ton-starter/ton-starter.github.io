@@ -22,7 +22,9 @@ export default defineNuxtPlugin({
       },
       async onResponseError({ response }: FetchHooksErrorParams) {
         const { status, statusText } = response;
-        // console.error(statusText);
+        console.error(statusText);
+        console.log('_nuxtApp');
+        console.log(_nuxtApp);
         // _nuxtApp.runWithContext(() => navigateTo('/modal-error-path'));
         if ([401, 422, 404, 500].includes(status)) {
           throw createError({

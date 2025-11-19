@@ -98,15 +98,5 @@ export default defineNuxtConfig({
       optimizeTranslationDirective: false,
     },
   },
-
-  // В Nuxt 3 с SSR ошибки 404 могут не попадать в error.vue, если сервер не настроен на это.
-  // Кастомная обработка ошибок:
-  hooks: {
-    'app:error'(error) {
-      // Принудительно перенаправляем на error.vue при 404
-      if (error.statusCode === 404) {
-        return sendRedirect(error.event, '/404', 404);
-      }
-    },
-  },
+  ssr: false,
 });

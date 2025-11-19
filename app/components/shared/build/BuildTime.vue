@@ -14,12 +14,11 @@ const buildTime = __BUILD_TIME__ || 'date err';
         target="_blank"
         rel="noopener noreferrer"
       >
-        Github</a
-      >
-      &nbsp;<i class="fab fa-github-alt"></i> /&gt;
+        Github
+      </a>
+      &nbsp;<IconGithub />/&gt;
     </div>
     <br />
-
     <span class="build-timestamp"> assembly stamp: {{ buildTime }} </span>
   </div>
 </template>
