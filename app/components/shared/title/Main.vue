@@ -8,9 +8,9 @@ import TonImg from '@/assets/img/logo/ton_symbol.svg';
       <img :src="TonImg" alt="TON Logo" />
       <NuxtLink to="/">TON Starter Kit</NuxtLink>
     </h1>
-    <p class="header-main__subtitle text-center">
+    <h2 class="header-main__subtitle text-center">
       Ваш путеводитель в экосистеме The Open Network
-    </p>
+    </h2>
   </div>
 </template>
 
