@@ -47,7 +47,11 @@ const navigationCards = ref<navCard[]>(navLinks);
       &-description {
         font-size: 20px;
         width: 81%;
-        height: 2.5em;
+        min-height: 2.5em;
+
+        @media (max-width: 480px) {
+          width: 95%;
+        }
       }
     }
   }
