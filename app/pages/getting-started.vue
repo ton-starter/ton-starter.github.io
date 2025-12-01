@@ -2,6 +2,15 @@
 
 <template>
   <section class="step">
+    <h2>Шаг 0. Ознакомься с документацией</h2>
+    <h3>Быстрое руководство по экосистеме TON</h3>
+    <ul>
+      <li><nuxt-link :to="`/lesson1`">Урок 1</nuxt-link></li>
+      <li><nuxt-link :to="`/lesson2`">Урок 2</nuxt-link></li>
+      <li><nuxt-link :to="`/lesson3`">Урок 3</nuxt-link></li>
+      <li><nuxt-link :to="`/lesson4`">Урок 4</nuxt-link></li>
+    </ul>
+
     <h2>Шаг 1. Установи TON Wallet</h2>
     <p>
       Скачай TON Wallet из официального источника и создай новый кошелёк.

@@ -8,7 +8,7 @@
       target="_blank"
       rel="noopener noreferrer"
     >
-      &lt; Github &nbsp; <IconGithub /> /&gt;
+      &lt; <IconGithub /> /&gt;
     </a>
   </div>
 </template>

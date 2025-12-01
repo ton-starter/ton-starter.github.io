@@ -40,6 +40,8 @@ import TonImg from '@/assets/img/logo/ton_symbol.svg';
     color: #1f1f1f;
     font-size: 22px;
     width: 67%;
+    font-weight: 300;
+    letter-spacing: 1px;
   }
 
   @media screen and (max-width: 768px) {
