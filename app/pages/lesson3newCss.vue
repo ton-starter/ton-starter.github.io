@@ -339,9 +339,6 @@ const conclusion = ref({
 </template>
 
 <style lang="scss">
-// Импортируем глобальные стили
-@import '@/assets/css/global.scss';
-
 .lesson-content {
   display: flex;
   flex-direction: column;
@@ -680,50 +677,75 @@ const conclusion = ref({
   }
 }
 
-// Адаптивные стили
+// Timeline and page-unique styles
+.timeline-section {
+  padding: $spacing-4xl;
+  text-align: center;
+}
+
+.timeline-title {
+  font-size: $font-size-4xl;
+  margin-bottom: $spacing-3xl;
+}
+
+.timeline-track {
+  display: flex;
+  gap: $spacing-lg;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-milestone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+}
+
+.milestone-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: $spacing-sm;
+  border: 4px solid white;
+}
+
+.milestone-label {
+  font-size: $font-size-base;
+  font-weight: 600;
+  color: $color-text-dark;
+}
+.milestone-year {
+  font-size: $font-size-sm;
+  color: $color-text-light;
+}
+
+.timeline-description {
+  text-align: center;
+  margin-top: $spacing-2xl;
+  padding-top: $spacing-xl;
+  border-top: 1px solid #e5e7eb;
+}
+
+// Responsive tweaks specific to this page
 @media (max-width: 768px) {
   .timeline-section {
     padding: $spacing-xl;
   }
-
   .timeline-title {
     font-size: $font-size-2xl;
     margin-bottom: $spacing-xl;
   }
-
   .timeline-track {
-    margin: 0;
     height: 100px;
   }
-
   .timeline-milestone {
     width: 80px;
   }
-
   .milestone-dot {
     width: 36px;
     height: 36px;
-  }
-
-  .generation-badge {
-    font-size: $font-size-xl;
-  }
-
-  .generation-text {
-    font-size: $font-size-xs;
-  }
-
-  .lesson-section__icon-wrapper {
-    width: 80px;
-    height: 80px;
-  }
-
-  .lesson-section__title {
-    font-size: $font-size-3xl;
-  }
-
-  .lesson-section__subtitle {
-    font-size: $font-size-lg;
   }
 }
 
@@ -732,32 +754,15 @@ const conclusion = ref({
     border-radius: $border-radius-lg;
     padding: $spacing-lg;
   }
-
   .timeline-title {
     font-size: $font-size-xl;
   }
-
   .timeline-description p {
     font-size: $font-size-lg;
   }
-
-  .lesson-section__icon-wrapper {
-    width: 70px;
-    height: 70px;
-  }
-
-  .lesson-section__title {
-    font-size: $font-size-2xl;
-  }
-
-  .lesson-section__subtitle {
-    font-size: $font-size-base;
-  }
-
   .points-grid {
     grid-template-columns: 1fr;
   }
-
   .lesson-grid--3 {
     grid-template-columns: 1fr;
   }

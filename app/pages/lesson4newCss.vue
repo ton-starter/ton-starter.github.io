@@ -446,422 +446,83 @@ const summary = ref({
 </template>
 
 <style lang="scss">
-// Импортируем глобальные стили
-@import '@/assets/css/global.scss';
-
-.lesson-content {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-3xl;
-}
-
-// Стили для контрактных секций
-.contract-section {
-  &--0 {
-    border-top: 6px solid $color-primary;
-  }
-
-  &--1 {
-    border-top: 6px solid $color-secondary;
-  }
-
-  &--2 {
-    border-top: 6px solid $color-warning;
-  }
-
-  &--3 {
-    border-top: 6px solid $color-danger;
-  }
-
-  &--4 {
-    border-top: 6px solid $color-info;
-  }
-}
-
-// Стили для ключевых точек
-.key-points-container {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-lg;
-}
+// Page-unique styles for lesson 4 only
 
 .key-point-item {
   display: flex;
   align-items: flex-start;
   gap: $spacing-lg;
   padding: $spacing-xl;
-  background: white;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
   border-radius: $border-radius-lg;
-  box-shadow: $shadow-sm;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: $shadow-md;
-  }
+  border: 1px solid #93c5fd;
+  border-left: 4px solid $color-primary;
 }
 
-.key-point-icon {
-  font-size: $font-size-4xl;
-  flex-shrink: 0;
-  margin-top: 4px;
-}
-
-.key-point-content {
-  flex: 1;
+.feature-card .feature-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: $spacing-md;
+  margin-bottom: $spacing-md;
 }
-
-.key-point-text {
-  font-size: $font-size-lg;
-  color: $color-text-medium;
-  line-height: 1.6;
-  margin: 0;
-  flex: 1;
-}
-
-// Стили для features
-.features-section {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-lg;
-  margin: $spacing-xl 0;
-}
-
-.feature-card {
-  .feature-header {
-    display: flex;
-    align-items: center;
-    gap: $spacing-md;
-    margin-bottom: $spacing-md;
-  }
-
-  .feature-icon-wrapper {
-    width: 60px;
-    height: 60px;
-    border-radius: $border-radius-md;
-    @include flex-center;
-  }
-
-  .feature-icon {
-    font-size: $font-size-2xl;
-    color: white;
-  }
-
-  .lesson-card__title {
-    font-size: $font-size-xl;
-  }
-
-  .feature-content {
-    margin-top: $spacing-md;
-  }
-}
-
-.explanation-alert {
-  margin-top: $spacing-md;
-}
-
-// Стили для примеров
-.examples-section {
-  margin: $spacing-xl 0;
-}
-
-.example-card {
-  text-align: center;
-  padding: $spacing-xl;
-
-  .example-icon {
-    font-size: $font-size-4xl;
-    margin-bottom: $spacing-md;
-  }
-
-  .example-title {
-    font-size: $font-size-lg;
-    font-weight: 700;
-    color: $color-text-dark;
-    margin: 0 0 $spacing-sm 0;
-  }
-
-  .example-description {
-    font-size: $font-size-base;
-    color: $color-text-medium;
-    line-height: 1.6;
-    margin: 0;
-  }
-}
-
-// Стили для параметров
-.parameters-section {
-  margin: $spacing-xl 0;
-}
-
-.parameters-title {
-  font-size: $font-size-xl;
-  font-weight: 600;
-  color: $color-text-dark;
-  margin: 0 0 $spacing-lg 0;
-}
-
-.parameters-list {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-}
-
 .parameter-card {
   display: flex;
   align-items: center;
   gap: $spacing-md;
   padding: $spacing-lg;
-
-  .parameter-icon {
-    font-size: $font-size-3xl;
-    flex-shrink: 0;
-  }
-
-  .parameter-content {
-    flex: 1;
-  }
-
-  .parameter-name {
-    font-size: $font-size-lg;
-    font-weight: 600;
-    color: #065f46;
-    margin: 0 0 $spacing-xs 0;
-  }
-
-  .parameter-description {
-    font-size: $font-size-base;
-    color: #065f46;
-    line-height: 1.6;
-    margin: 0;
-  }
 }
-
-// Стили для process
 .process-header {
   display: flex;
   align-items: center;
   gap: $spacing-md;
   margin-bottom: $spacing-lg;
 }
-
-.process-icon {
-  font-size: $font-size-3xl;
-}
-
-// Стили для components
-.components-section {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-lg;
-  margin: $spacing-xl 0;
-}
-
 .component-card {
   padding: $spacing-xl;
-
-  &--0 {
-    border-left: 4px solid $color-primary;
-  }
-
-  &--1 {
-    border-left: 4px solid $color-danger;
-  }
-
-  .component-header {
-    display: flex;
-    align-items: center;
-    gap: $spacing-md;
-    margin-bottom: $spacing-md;
-  }
-
-  .component-icon {
-    font-size: $font-size-4xl;
-  }
-
-  .component-title {
-    font-size: $font-size-xl;
-    font-weight: 700;
-    color: $color-text-dark;
-    margin: 0;
-  }
+}
+.component-card--0 {
+  border-left: 4px solid $color-primary;
+}
+.component-card--1 {
+  border-left: 4px solid $color-danger;
 }
 
-// Стили для process list
-.process-list-section {
-  margin: $spacing-lg 0;
-
-  .process-list-title {
-    font-size: $font-size-xl;
-    font-weight: 600;
-    color: $color-text-dark;
-    margin: 0 0 $spacing-md 0;
-  }
-}
-
-// Стили для recovery
-.recovery-content {
-  width: 100%;
-
-  .recovery-title {
-    font-size: $font-size-xl;
-    font-weight: 600;
-    color: #0e7490;
-    margin: 0 0 $spacing-xs 0;
-  }
-
-  .recovery-description {
-    font-size: $font-size-lg;
-    color: #0e7490;
-    line-height: 1.7;
-    margin: 0;
-  }
-}
-
-// Стили для considerations
-.considerations-section {
-  background: white;
-  border-radius: $border-radius-xl;
-  padding: $spacing-3xl;
-  box-shadow: $shadow-md;
-  margin-top: $spacing-xl;
-}
-
-.considerations-title {
-  font-size: $font-size-3xl;
-  font-weight: 700;
-  color: $color-text-dark;
-  text-align: center;
-  margin: 0 0 $spacing-3xl 0;
-}
-
-.consideration-card {
-  text-align: center;
-  padding: $spacing-xl;
-
-  .consideration-icon {
-    font-size: $font-size-4xl;
-    margin-bottom: $spacing-md;
-  }
-
-  .consideration-title {
-    font-size: $font-size-lg;
-    font-weight: 700;
-    color: $color-text-dark;
-    margin: 0 0 $spacing-sm 0;
-  }
-
-  .consideration-text {
-    font-size: $font-size-base;
-    color: $color-text-medium;
-    line-height: 1.6;
-    margin: 0;
-  }
-}
-
-// Адаптивные стили
+// Responsive tweaks specific to this page
 @media (max-width: 768px) {
   .key-point-item {
     padding: $spacing-lg;
     flex-direction: column;
     gap: $spacing-md;
   }
-
-  .key-point-content {
-    width: 100%;
-  }
-
   .lesson-section__header {
     flex-direction: column;
     align-items: flex-start;
     gap: $spacing-lg;
   }
-
   .lesson-section__icon-wrapper {
     width: 70px;
     height: 70px;
   }
-
-  .lesson-icon--large {
-    font-size: $font-size-2xl;
-  }
-
   .lesson-section__title {
     font-size: $font-size-2xl;
   }
-
-  .lesson-section__subtitle {
-    font-size: $font-size-lg;
-  }
-
-  .feature-card {
-    .feature-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: $spacing-sm;
-    }
-  }
-
-  .example-card,
-  .consideration-card {
-    padding: $spacing-lg;
-  }
-
-  .considerations-section {
-    padding: $spacing-xl;
-  }
-
-  .considerations-title {
-    font-size: $font-size-2xl;
-    margin-bottom: $spacing-xl;
+  .feature-card .feature-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-sm;
   }
 }
 
 @media (max-width: 480px) {
-  .key-point-item {
-    padding: $spacing-md;
-  }
-
-  .key-point-text {
-    font-size: $font-size-base;
-  }
-
   .lesson-section {
     padding: $spacing-lg $spacing-md;
     border-radius: $border-radius-lg;
-
-    &__title {
-      font-size: $font-size-xl;
-    }
-
-    &__subtitle {
-      font-size: $font-size-base;
-    }
   }
-
-  .lesson-section__icon-wrapper {
-    width: 60px;
-    height: 60px;
-  }
-
-  .lesson-icon--large {
+  .lesson-section__title {
     font-size: $font-size-xl;
   }
-
   .lesson-grid--3 {
     grid-template-columns: 1fr;
-  }
-
-  .considerations-section {
-    border-radius: $border-radius-lg;
-    padding: $spacing-lg;
-  }
-
-  .considerations-title {
-    font-size: $font-size-xl;
   }
 }
 </style>

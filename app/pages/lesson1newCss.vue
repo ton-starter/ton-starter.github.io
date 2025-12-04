@@ -5,7 +5,7 @@ const sections = ref([
     content:
       'TON — это платформа для децентрализованных приложений, объединяющая пользователей, валидаторов и разработчиков самих приложений. Это больше, чем просто блокчейн.',
     icon: '🚀',
-    gradient: 'blue',
+    gradient: 'light-blue',
   },
   {
     title: 'Три стороны блокчейна TON',
@@ -16,7 +16,7 @@ const sections = ref([
       'разработчики приложений, предоставляющие сервисы на основе сети.',
     ],
     icon: '⚖️',
-    gradient: 'purple',
+    gradient: 'purple-pink',
   },
 ]);
 
@@ -140,7 +140,9 @@ const ecosystem = ref({
             :key="index"
             class="lesson-card"
           >
-            <div class="lesson-number lesson-number--circle-lg">
+            <div
+              class="lesson-number lesson-number--circle lesson-number--circle-lg"
+            >
               {{ index + 1 }}
             </div>
             <p class="lesson-card__text">{{ item }}</p>
@@ -225,7 +227,7 @@ const ecosystem = ref({
               class="lesson-card tool-item"
             >
               <div class="lesson-icon lesson-icon--large">{{ item.icon }}</div>
-              <h4 class="lesson-card__title">{{ item.name }}</h4>
+              <h4 class="tool-name">{{ item.name }}</h4>
               <ul
                 v-if="item.subitems"
                 class="lesson-list lesson-list--unordered"
@@ -267,42 +269,35 @@ const ecosystem = ref({
 </template>
 
 <style lang="scss">
+// Page-specific styles only — shared lesson styles live in `app/assets/styles/global.scss`
+
 .lesson-container {
+  // Local content layout tweaks
   .article__content {
     display: flex;
     flex-direction: column;
     gap: $spacing-3xl;
   }
 
-  // Специфичные стили для этого урока
-  .lesson-section {
-    &__title {
-      &--center {
-        text-align: center;
-        width: 100%;
-        margin-bottom: 0;
-      }
-    }
+  // Centered section title modifier (kept local)
+  .lesson-section__title--center {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0;
   }
 
-  // Стили для сервисов
+  // Service badges used only on this page
   .service-danger {
     border-color: #fecaca;
-    background-color: #fef2f2;
+    background: #fef2f2;
   }
 
   .service-success {
     border-color: #bbf7d0;
-    background-color: #f0fdf4;
+    background: #f0fdf4;
   }
 
-  .service-header {
-    display: flex;
-    align-items: center;
-    gap: $spacing-sm;
-    margin-bottom: $spacing-md;
-  }
-
+  .service-header,
   .app-header {
     display: flex;
     align-items: center;
@@ -310,7 +305,6 @@ const ecosystem = ref({
     margin-bottom: $spacing-md;
   }
 
-  // Стили для примеров
   .lesson-example {
     background: rgba(255, 255, 255, 0.5);
     border-radius: $border-radius-md;
@@ -318,8 +312,6 @@ const ecosystem = ref({
     margin: $spacing-md 0;
 
     &__title {
-      font-weight: 600;
-      color: $color-text-dark;
       margin-bottom: $spacing-xs;
     }
 
@@ -331,20 +323,28 @@ const ecosystem = ref({
     }
   }
 
-  // Стили для инструментов
-  .tool-item {
-    text-align: center;
+  .tool {
+    &-item {
+      @include flex-center;
+      flex-direction: column;
+      text-align: center;
 
-    .lesson-icon {
-      margin-bottom: $spacing-md;
+      .lesson-icon {
+        margin-bottom: $spacing-md;
+      }
+
+      .lesson-list {
+        text-align: left;
+      }
     }
-
-    .lesson-card__title {
+    &-name {
+      font-size: $font-size-lg;
+      font-weight: 600;
+      color: $color-text-dark;
       margin-bottom: $spacing-sm;
     }
   }
 
-  // Стили для экосистемы
   .ecosystem-item {
     display: flex;
     flex-direction: column;
@@ -361,78 +361,30 @@ const ecosystem = ref({
     font-size: $font-size-base;
     text-align: center;
   }
+}
 
-  // Адаптивные стили для мобильных
-  @media (max-width: 640px) {
-    .lesson-hero__title {
-      font-size: $font-size-2xl;
-      flex-direction: column;
-      gap: $spacing-xs;
-    }
-
-    .lesson-hero__icon {
-      font-size: $font-size-3xl;
-    }
-
-    .lesson-section {
-      padding: $spacing-lg;
-
-      &__title {
-        font-size: $font-size-xl;
-      }
-
-      &__content {
-        font-size: $font-size-base;
-      }
-    }
-
-    .lesson-card__title {
-      font-size: $font-size-lg;
-    }
-
-    .lesson-card__text {
-      font-size: $font-size-base;
-    }
-
-    .lesson-conclusion {
-      padding: $spacing-xl $spacing-lg;
-
-      &__title {
-        font-size: $font-size-xl;
-      }
-
-      &__text {
-        font-size: $font-size-base;
-      }
-    }
+// Responsive tweaks that are specific to this page
+@media (max-width: 640px) {
+  .lesson-hero__icon {
+    font-size: $font-size-3xl;
   }
 
-  @media (max-width: 480px) {
-    .lesson-container {
-      padding: $spacing-xl 0;
-    }
+  .lesson-card__title {
+    font-size: $font-size-lg;
+  }
+}
 
-    .lesson-hero__title {
-      font-size: $font-size-xl;
-    }
+@media (max-width: 480px) {
+  .lesson-container {
+    padding: $spacing-xl 0;
+  }
 
-    .lesson-section {
-      padding: $spacing-md;
-      border-radius: $border-radius-lg;
+  .lesson-hero__title {
+    font-size: $font-size-xl;
+  }
 
-      &__title {
-        font-size: $font-size-lg;
-      }
-    }
-
-    .lesson-conclusion {
-      border-radius: $border-radius-lg;
-      padding: $spacing-lg $spacing-md;
-
-      &__title {
-        font-size: $font-size-lg;
-      }
-    }
+  .lesson-section__title {
+    font-size: $font-size-lg;
   }
 }
 </style>

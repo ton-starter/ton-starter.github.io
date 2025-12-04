@@ -9,6 +9,10 @@ const steps = ref([
     title: 'Шаг 0. Ознакомься с документацией',
     subtitle: 'Быстрое руководство по экосистеме TON',
     links: [
+      { text: 'Урок 1 css', to: '/lesson1newCss' },
+      { text: 'Урок 2 css', to: '/lesson2newCss' },
+      { text: 'Урок 3 css', to: '/lesson3newCss' },
+      { text: 'Урок 4 css', to: '/lesson4newCss' },
       { text: 'Урок 1', to: '/lesson1' },
       { text: 'Урок 2', to: '/lesson2' },
       { text: 'Урок 3', to: '/lesson3' },

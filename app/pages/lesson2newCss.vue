@@ -163,7 +163,7 @@ const conclusion = ref({
 </script>
 
 <template>
-  <div class="lesson-container">
+  <div class="lesson-container lesson-2">
     <!-- Hero Section -->
     <div class="lesson-hero">
       <h1 class="lesson-hero__title">
@@ -407,8 +407,11 @@ const conclusion = ref({
 </template>
 
 <style lang="scss">
-// Импортируем глобальные стили
-@import '@/assets/css/global.scss';
+.lesson-2 {
+  .lesson-number--square {
+    background: transparent;
+  }
+}
 
 .lesson-content {
   display: flex;
@@ -416,7 +419,6 @@ const conclusion = ref({
   gap: $spacing-3xl;
 }
 
-// Стили для summary
 .lesson-key-points__content {
   padding-left: 0;
 }
@@ -431,90 +433,53 @@ const conclusion = ref({
   display: flex;
   align-items: flex-start;
   gap: $spacing-md;
+
+  &-text {
+    font-size: $font-size-lg;
+    color: $color-text-medium;
+    line-height: 1.7;
+    margin: 0;
+    flex: 1;
+  }
 }
 
-.summary-point-text {
-  font-size: $font-size-lg;
-  color: $color-text-medium;
-  line-height: 1.7;
-  margin: 0;
-  flex: 1;
-}
-
-// Стили для features
-.features-section {
+.features-section,
+.guarantees-section,
+.section-points {
   display: flex;
   flex-direction: column;
   gap: $spacing-lg;
   margin: $spacing-lg 0;
 }
 
-.feature-card {
-  .feature-header {
-    display: flex;
-    align-items: center;
-    gap: $spacing-sm;
-    margin-bottom: $spacing-md;
-  }
-}
-
-// Стили для guarantees
-.guarantees-section {
+.feature-card .feature-header,
+.item-card .item-header,
+.level-card .level-description {
   display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-  margin: $spacing-lg 0;
-}
-
-// Стили для items
-.item-card {
-  .item-header {
-    display: flex;
-    align-items: center;
-    gap: $spacing-sm;
-    margin-bottom: $spacing-md;
-  }
-}
-
-// Стили для section points
-.section-points {
-  margin: $spacing-lg 0;
-}
-
-// Стили для уровней
-.level-card {
-  .level-description {
-    font-size: $font-size-lg;
-    color: $color-text-medium;
-    line-height: 1.7;
-    margin: 0 0 $spacing-md 0;
-  }
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
 }
 
 .level-properties {
   margin-top: $spacing-md;
 }
 
-// Стили для note
 .note-alert {
   margin: $spacing-lg 0;
 }
 
-// Адаптивные стили
 @media (max-width: 768px) {
   .summary-point {
     gap: $spacing-sm;
   }
-
   .summary-point-text {
     font-size: $font-size-base;
   }
-
   .features-section,
   .guarantees-section {
     gap: $spacing-md;
   }
-
   .feature-card,
   .item-card,
   .level-card {
@@ -527,11 +492,9 @@ const conclusion = ref({
     flex-direction: column;
     gap: $spacing-xs;
   }
-
   .lesson-number--circle-sm {
     align-self: flex-start;
   }
-
   .summary-point-text {
     font-size: $font-size-base;
   }
