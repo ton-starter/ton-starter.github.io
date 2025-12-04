@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     head: appSEO,
   },
 
-  css: ['~/assets/styles/main.scss'],
+  css: ['~/assets/styles/global.scss'],
 
   modules: ['@nuxt/test-utils', '@element-plus/nuxt', '@nuxtjs/i18n'],
 
@@ -76,7 +76,7 @@ export default defineNuxtConfig({
         scss: {
           additionalData: `
           @use "~/assets/styles/global/element.scss" as element;
-          @use "~/assets/styles/global/_colors.scss" as *;
+          @use "~/assets/styles/global/_variables.scss" as *;
           `,
         },
       },

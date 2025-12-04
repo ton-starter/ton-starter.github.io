@@ -1,0 +1,123 @@
+$primary: #673bb7;
+$header_link_hover: #f5f0ff;
+
+/* Color variables for TON theme */
+$ton-primary: #0088cc;
+$ton-secondary: #7b61ff;
+$ton-background: #f8f9fa;
+$ton-text: #1a1a1a;
+$ton-border: #e0e0e0;
+
+// ==============================================
+// Глобальные стили для уроков TON
+// ==============================================
+
+// Переменные
+$color-primary: #3b82f6;
+$color-primary-dark: #1d4ed8;
+$color-secondary: #8b5cf6;
+$color-secondary-dark: #7c3aed;
+$color-success: #10b981;
+$color-success-dark: #047857;
+$color-warning: #f59e0b;
+$color-warning-dark: #d97706;
+$color-danger: #ef4444;
+$color-danger-dark: #dc2626;
+$color-info: #06b6d4;
+$color-info-dark: #0891b2;
+
+$color-text-dark: #1f2937;
+$color-text-medium: #4b5563;
+$color-text-light: #6b7280;
+$color-text-white: #ffffff;
+
+$color-bg-white: #ffffff;
+$color-bg-light: #f9fafb;
+$color-bg-lighter: #f3f4f6;
+$color-bg-dark: #1f2937;
+$color-bg-darker: #111827;
+
+$border-radius-sm: 8px;
+$border-radius-md: 12px;
+$border-radius-lg: 16px;
+$border-radius-xl: 20px;
+$border-radius-2xl: 24px;
+
+$shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 8px 20px rgba(0, 0, 0, 0.05);
+$shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+$spacing-xs: 8px;
+$spacing-sm: 12px;
+$spacing-md: 16px;
+$spacing-lg: 20px;
+$spacing-xl: 24px;
+$spacing-2xl: 28px;
+$spacing-3xl: 32px;
+$spacing-4xl: 40px;
+$spacing-5xl: 48px;
+
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 1.75rem;
+$font-size-4xl: 2rem;
+$font-size-5xl: 2.5rem;
+$font-size-6xl: 3rem;
+
+// Миксины
+@mixin gradient($deg: 135deg, $color1: #3b82f6, $color2: #1d4ed8) {
+  background: linear-gradient($deg, $color1 0%, $color2 100%);
+}
+
+@mixin card-base {
+  background: $color-bg-white;
+  border-radius: $border-radius-2xl;
+  box-shadow: $shadow-md;
+  padding: $spacing-3xl;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+  }
+}
+
+@mixin card-light {
+  background: linear-gradient(
+    135deg,
+    $color-bg-light 0%,
+    $color-bg-lighter 100%
+  );
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+@mixin text-gradient($deg: 135deg, $color1: #3b82f6, $color2: #1d4ed8) {
+  background: linear-gradient($deg, $color1 0%, $color2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
