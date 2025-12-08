@@ -269,16 +269,7 @@ const ecosystem = ref({
 </template>
 
 <style lang="scss">
-// Page-specific styles only — shared lesson styles live in `app/assets/styles/global.scss`
-
 .lesson-container {
-  // Local content layout tweaks
-  .article__content {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-3xl;
-  }
-
   // Centered section title modifier (kept local)
   .lesson-section__title--center {
     text-align: center;

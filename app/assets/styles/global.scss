@@ -342,6 +342,10 @@ a {
   border-radius: $border-radius-md;
   margin: $spacing-lg 0;
 
+  & + .lesson-alert {
+    margin: 0 0 $spacing-lg;
+  }
+
   &__icon {
     font-size: $font-size-2xl;
     flex-shrink: 0;
@@ -642,10 +646,28 @@ a {
   }
 }
 
-// Адаптивность
 @media (max-width: 768px) {
   .lesson-container {
     padding: $spacing-xl $spacing-md;
+
+    .lesson-content,
+    .article__content {
+      gap: $spacing-xs;
+    }
+
+    .lesson-icon {
+      &--small {
+        font-size: 0.9rem;
+      }
+
+      &--medium {
+        font-size: 1.3rem;
+      }
+
+      &--large {
+        font-size: 1.5rem;
+      }
+    }
   }
 
   .lesson-hero__title {
@@ -666,8 +688,8 @@ a {
     padding: $spacing-xl;
 
     &__header {
-      flex-direction: column;
-      align-items: flex-start;
+      // flex-direction: column;
+      // align-items: flex-start;
       gap: $spacing-lg;
     }
 
@@ -718,6 +740,10 @@ a {
     &__title {
       font-size: $font-size-2xl;
     }
+
+    .lesson-card__title {
+      font-size: $font-size-base;
+    }
   }
 
   .lesson-key-points,
@@ -733,6 +759,13 @@ a {
 
     &__text {
       font-size: $font-size-base;
+    }
+  }
+
+  .lesson-section {
+    &__icon-wrapper {
+      width: 45px;
+      height: 45px;
     }
   }
 }
