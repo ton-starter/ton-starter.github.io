@@ -71,29 +71,29 @@ a {
 .lesson-hero {
   text-align: center;
   margin-bottom: $spacing-5xl;
-}
 
-.lesson-hero__title {
-  font-size: $font-size-5xl;
-  font-weight: 700;
-  color: $color-text-dark;
-  margin-bottom: $spacing-md;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $spacing-md;
-}
+  &__title {
+    font-size: $font-size-5xl;
+    font-weight: 700;
+    color: $color-text-dark;
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-md;
+  }
 
-.lesson-hero__icon {
-  font-size: $font-size-6xl;
-}
+  &__icon {
+    font-size: $font-size-6xl;
+  }
 
-.lesson-hero__subtitle {
-  font-size: $font-size-xl;
-  color: $color-text-light;
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
+  &__subtitle {
+    font-size: $font-size-xl;
+    color: $color-text-light;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
 }
 
 // Карточка с ключевыми точками
@@ -104,24 +104,24 @@ a {
   margin-bottom: $spacing-4xl;
   border: 2px solid #cbd5e1;
   box-shadow: $shadow-md;
-}
 
-.lesson-key-points__header {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  margin-bottom: $spacing-2xl;
-}
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-2xl;
+  }
 
-.lesson-key-points__icon {
-  font-size: $font-size-4xl;
-}
+  &__icon {
+    font-size: $font-size-4xl;
+  }
 
-.lesson-key-points__title {
-  font-size: $font-size-3xl;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 0;
+  &__title {
+    font-size: $font-size-3xl;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+  }
 }
 
 // Секция урока
@@ -206,79 +206,58 @@ a {
     border: none;
     color: $color-text-white;
 
-    .lesson-card__title,
-    .lesson-card__text {
+    &__title,
+    &__text {
       color: $color-text-white;
     }
   }
 
+  // Number is a shared utility; keep as element under card
   .lesson-number {
     margin-bottom: 16px;
   }
-}
 
-.lesson-card__icon {
-  font-size: $font-size-4xl;
-  margin-bottom: $spacing-lg;
-}
+  &__icon {
+    font-size: $font-size-4xl;
+    margin-bottom: $spacing-lg;
+  }
 
-.lesson-card__title {
-  font-size: $font-size-2xl;
-  font-weight: 700;
-  color: $color-text-dark;
-  margin: 0;
-}
-
-.lesson-card__text {
-  font-size: $font-size-lg;
-  color: $color-text-medium;
-  line-height: 1.6;
-  margin: 0;
-}
-
-// Иконки
-.lesson-icon {
-  &--small {
+  &__title {
     font-size: $font-size-2xl;
+    font-weight: 700;
+    color: $color-text-dark;
+    margin: 0;
   }
 
-  &--medium {
-    font-size: 1.3rem;
-  }
-
-  &--large {
-    font-size: $font-size-5xl;
-  }
-
-  &--circle {
-    @include flex-center;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    color: $color-text-white;
-
-    &-sm {
-      width: 40px;
-      height: 40px;
-    }
-
-    &-lg {
-      width: 80px;
-      height: 80px;
-    }
+  &__text {
+    font-size: $font-size-lg;
+    color: $color-text-medium;
+    line-height: 1.6;
+    margin: 0;
   }
 }
 
-// Списки
 .lesson-list {
   list-style: none;
   padding: 0;
   margin: 0;
 
+  // Base item styling
+  &__item {
+    font-size: $font-size-lg;
+    color: $color-text-medium;
+    line-height: 1.6;
+    margin-bottom: $spacing-sm;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
   &--ordered {
     padding-left: $spacing-xl;
 
-    .lesson-list__item {
+    & .lesson-list__item {
       counter-increment: list-counter;
       position: relative;
       padding-left: $spacing-lg;
@@ -296,7 +275,7 @@ a {
   &--unordered {
     padding-left: $spacing-xl;
 
-    .lesson-list__item {
+    & .lesson-list__item {
       position: relative;
       padding-left: $spacing-lg;
 
@@ -312,7 +291,7 @@ a {
   }
 
   &--check {
-    .lesson-list__item {
+    & .lesson-list__item {
       position: relative;
       padding-left: $spacing-xl;
 
@@ -327,7 +306,7 @@ a {
   }
 
   &--arrow {
-    .lesson-list__item {
+    & .lesson-list__item {
       position: relative;
       padding-left: $spacing-xl;
 
@@ -663,6 +642,42 @@ a {
 
   &--cyan {
     @include gradient(135deg, #06b6d4, #0891b2);
+  }
+}
+
+// Иконки (базовые размеры)
+.lesson-icon {
+  &--small {
+    font-size: 1.5rem;
+  }
+
+  &--medium {
+    font-size: 1.3rem;
+  }
+
+  &--large {
+    font-size: 2.1rem;
+  }
+
+  &--circle {
+    @include flex-center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: $color-text-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-sm {
+      width: 40px;
+      height: 40px;
+    }
+
+    &-lg {
+      width: 80px;
+      height: 80px;
+    }
   }
 }
 

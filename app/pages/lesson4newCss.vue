@@ -157,16 +157,16 @@ const summary = ref(summaryData);
             </div>
           </div>
         </div>
-        <div v-if="section.process" class="lesson-example">
+        <div v-if="section.transfer" class="lesson-example">
           <IconTitle
-            v-if="section.process"
-            :icon="section.process.icon"
-            :title="section.process.title"
+            v-if="section.transfer"
+            :icon="section.transfer.icon"
+            :title="section.transfer.title"
             class="process-header"
           />
           <ol class="lesson-example__steps">
             <li
-              v-for="(step, stepIndex) in section.process.steps"
+              v-for="(step, stepIndex) in section.transfer.steps"
               :key="stepIndex"
               class="lesson-example__step"
             >
@@ -268,20 +268,6 @@ const summary = ref(summaryData);
 
 <style lang="scss">
 .lesson4 {
-  .lesson-hero {
-    &__title {
-      font-size: 1.9rem;
-    }
-    &__subtitle {
-      color: $color-text-medium;
-      margin-top: $spacing-sm;
-    }
-    &__icon {
-      display: inline-block;
-      margin-right: $spacing-sm;
-    }
-  }
-
   .lesson-key-points {
     &__content {
       .key-point-card {
@@ -382,6 +368,44 @@ const summary = ref(summaryData);
     }
   }
 
+  .lesson-card {
+    .icon-title__title {
+      font-size: 1.2rem;
+    }
+  }
+
+  .parameters-section {
+    margin: 24px 0;
+    .parameters {
+      &-title {
+        font-size: 1.375rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0 0 20px 0;
+      }
+
+      &-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+  }
+
+  .components-section {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 28px 0;
+  }
+
+  .process-list {
+    &-section {
+    }
+    &-title {
+      margin-bottom: 0.9em;
+    }
+  }
   // Responsive tweaks
   @media (max-width: 768px) {
     .lesson-content {

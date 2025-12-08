@@ -26,4 +26,10 @@ defineProps<{ icon?: string; title: string }>();
     color: var(--color-text, #111);
   }
 }
+
+.lesson-section {
+  .icon-title {
+    margin-bottom: 1em;
+  }
+}
 </style>
