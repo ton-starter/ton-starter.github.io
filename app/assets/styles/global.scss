@@ -164,9 +164,10 @@ a {
 }
 
 .lesson-section__icon-wrapper {
-  width: 56px;
-  height: 56px;
-  border-radius: $border-radius-lg;
+  width: 5em;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: $border-radius-xl;
   @include flex-center;
   flex-shrink: 0;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
@@ -648,15 +649,18 @@ a {
 // Иконки (базовые размеры)
 .lesson-icon {
   &--small {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    padding: 0.1rem;
   }
 
   &--medium {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    padding: 0.3rem;
   }
 
   &--large {
-    font-size: 2.1rem;
+    font-size: 2.5rem;
+    padding: 0.5rem;
   }
 
   &--circle {
@@ -801,6 +805,7 @@ a {
     &__icon-wrapper {
       width: 45px;
       height: 45px;
+      border-radius: 13px;
     }
   }
 }
