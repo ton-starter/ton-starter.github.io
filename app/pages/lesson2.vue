@@ -1,9 +1,13 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: 'lesson',
+});
 import {
   sections as sectionsData,
   summary as summaryData,
   conclusion as conclusionData,
 } from './../../data/content/lesson2.content';
+
 const sections = ref(sectionsData);
 const summary = ref(summaryData);
 const conclusion = ref(conclusionData);

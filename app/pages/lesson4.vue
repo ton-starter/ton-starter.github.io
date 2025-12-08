@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: 'lesson',
+});
 import {
   sections as sectionsData,
   keyPoints as keyPointsData,

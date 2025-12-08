@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: 'lesson',
+});
+
 import {
   sections as sectionsData,
   services as servicesData,

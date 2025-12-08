@@ -25,14 +25,18 @@ const isDev = process.env.NODE_ENV === 'development';
 
 <template>
   <div class="error-container">
+    <!-- Детали ошибки (только в режиме разработки) -->
+    <el-alert
+      v-if="isDev"
+      type="error"
+      :title="statusMessage"
+      :description="props.error?.stack"
+      show-icon
+    />
+
     <h1 class="error-code">{{ statusCode }}</h1>
     <h2 class="error-title">{{ statusMessage }}</h2>
     <p class="error-description">{{ description }}</p>
-
-    <!-- Детали ошибки (только в режиме разработки) -->
-    <n-alert v-if="isDev" :title="message" type="error">
-      <pre v-html="error"></pre>
-    </n-alert>
 
     <div class="error-actions">
       <NuxtLink to="/" class="error-button primary">Back to Home</NuxtLink>
