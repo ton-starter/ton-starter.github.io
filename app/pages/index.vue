@@ -12,7 +12,11 @@ const navigationCards = ref<navCard[]>(navLinks);
       :sm="12"
       :span="24"
     >
-      <el-card class="custom-card" @click="navigateTo(card.route)">
+      <el-card
+        class="custom-card"
+        shadow="hover"
+        @click="navigateTo(card.route)"
+      >
         <template #header>
           <div class="items-center">
             <span class="item-icon">{{ card.icon }}</span>

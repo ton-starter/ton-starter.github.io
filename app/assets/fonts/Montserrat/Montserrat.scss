@@ -36,6 +36,11 @@ $fonts: (
 @each $font in $fonts {
   $name: list.nth($font, 1);
   $weight: list.nth($font, 2);
+
+  //   Deprecation Warning [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+  // Suggestion: if(sass(list.length($font) > 2): list.nth($font, 3); else: normal)
+  // More info: https://sass-lang.com/d/if-function
   $style: if(list.length($font) > 2, list.nth($font, 3), normal);
+
   @include font-face($name, $weight, $style);
 }

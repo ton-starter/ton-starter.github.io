@@ -5,7 +5,12 @@ import appSEO from './data/seo.json';
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+
   srcDir: './app',
+  alias: {
+    '@': resolve(__dirname, './app'),
+    '~~': resolve(__dirname, './'),
+  },
   rootDir: __dirname,
 
   app: {
@@ -18,11 +23,6 @@ export default defineNuxtConfig({
 
   elementPlus: {
     importStyle: 'scss',
-  },
-
-  alias: {
-    '@': resolve(__dirname, './app'),
-    '~~': resolve(__dirname, './'),
   },
 
   components: [

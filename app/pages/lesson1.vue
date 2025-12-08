@@ -9,7 +9,7 @@ import {
   apps as appsData,
   blockchainTools as blockchainToolsData,
   ecosystem as ecosystemData,
-} from './../../data/content/lesson1.content';
+} from '~~/data/content/lesson1.content';
 const sections = ref(sectionsData);
 const services = ref(servicesData);
 const apps = ref(appsData);

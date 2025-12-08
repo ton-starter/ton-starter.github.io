@@ -13,6 +13,7 @@ const buildTime = __BUILD_TIME__ || 'date err';
 <style lang="scss">
 .build-timestamp {
   display: flex;
-  opacity: 0.15;
+  opacity: 0.5;
+  color: white;
 }
 </style>

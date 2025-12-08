@@ -6,7 +6,7 @@ import {
   sections as sectionsData,
   keyPoints as keyPointsData,
   conclusion as conclusionData,
-} from './../../data/content/lesson3.content';
+} from '~~/data/content/lesson3.content';
 const sections = ref(sectionsData);
 const keyPoints = ref(keyPointsData);
 const conclusion = ref(conclusionData);
