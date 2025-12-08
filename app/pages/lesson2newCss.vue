@@ -356,7 +356,7 @@ const conclusion = ref({
             :key="levelIndex"
             class="lesson-card level-card"
           >
-            <h3 class="lesson-card__title">{{ level.name }}</h3>
+            <h3 class="level-card__title">{{ level.name }}</h3>
             <p class="level-description">{{ level.description }}</p>
             <ul class="lesson-list level-properties">
               <li
@@ -417,30 +417,16 @@ const conclusion = ref({
   display: flex;
   flex-direction: column;
   gap: $spacing-3xl;
+  .level-card {
+    &__title {
+      margin-bottom: 1.1em;
+      font-size: 1.3em;
+    }
+  }
 }
 
 .lesson-key-points__content {
   padding-left: 0;
-}
-
-.summary-points {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-lg;
-}
-
-.summary-point {
-  display: flex;
-  align-items: flex-start;
-  gap: $spacing-md;
-
-  &-text {
-    font-size: $font-size-lg;
-    color: $color-text-medium;
-    line-height: 1.7;
-    margin: 0;
-    flex: 1;
-  }
 }
 
 .features-section,

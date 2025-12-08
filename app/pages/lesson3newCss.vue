@@ -126,7 +126,7 @@ const conclusion = ref({
 </script>
 
 <template>
-  <div class="lesson-container">
+  <div class="lesson-container lesson3">
     <!-- Hero Section -->
     <div class="lesson-hero">
       <h1 class="lesson-hero__title">
@@ -177,7 +177,7 @@ const conclusion = ref({
             :class="`gradient--${section.gradient}`"
           >
             <div class="generation-badge">
-              {{ index + 1 }}<span class="generation-text">поколение</span>
+              {{ index + 1 }}
             </div>
           </div>
           <div class="lesson-section__title-wrapper">
@@ -339,432 +339,399 @@ const conclusion = ref({
 </template>
 
 <style lang="scss">
-.lesson-content {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-3xl;
-}
-
-// Стили для карточек ключевых точек
-.key-point-card {
-  background: white;
-  border-radius: $border-radius-lg;
-  padding: $spacing-xl;
-  border-left: 4px solid;
-  box-shadow: $shadow-sm;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: $shadow-md;
+.lesson3 {
+  // Основные компоненты
+  &-content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3xl;
   }
 
-  &--0 {
-    border-color: $color-warning;
+  // Карточки ключевых точек
+  .key-point-card {
+    background: white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+    border-left: 4px solid;
+    box-shadow: $shadow-sm;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+    }
+
+    .lesson-number {
+      margin-bottom: 1.3em;
+    }
+
+    // Модификаторы для разных цветов
+    $border-colors: (
+      0: $color-warning,
+      1: $color-secondary,
+      2: $color-primary,
+    );
+
+    @each $index, $color in $border-colors {
+      &--#{$index} {
+        border-color: $color;
+      }
+    }
   }
 
-  &--1 {
-    border-color: $color-secondary;
+  .key-point-text {
+    font-size: $font-size-lg;
+    color: $color-text-medium;
+    line-height: 1.6;
+    margin: 0;
   }
 
-  &--2 {
-    border-color: $color-primary;
-  }
-}
+  // Генерации
+  $generation-colors: (
+    0: $color-warning,
+    1: $color-secondary,
+    2: $color-primary,
+  );
 
-.key-point-text {
-  font-size: $font-size-lg;
-  color: $color-text-medium;
-  line-height: 1.6;
-  margin: 0;
-}
-
-// Стили для поколений
-.generation-0 {
-  border-top: 6px solid $color-warning;
-}
-
-.generation-1 {
-  border-top: 6px solid $color-secondary;
-}
-
-.generation-2 {
-  border-top: 6px solid $color-primary;
-}
-
-.generation-badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  text-align: center;
-  font-size: $font-size-2xl;
-}
-
-.generation-text {
-  font-size: $font-size-xs;
-  font-weight: 500;
-  opacity: 0.9;
-  margin-top: 4px;
-}
-
-// Стили для точек
-.points-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: $spacing-md;
-  margin: $spacing-lg 0;
-
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(2, 1fr);
+  @each $index, $color in $generation-colors {
+    .generation-#{$index} {
+      border-top: 6px solid $color;
+    }
   }
 
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
+  .generation-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    font-size: $font-size-2xl;
   }
-}
 
-.point-item {
-  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-  border-radius: $border-radius-md;
-  padding: $spacing-lg;
-  display: flex;
-  align-items: flex-start;
-  gap: $spacing-md;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  .generation-text {
+    font-size: $font-size-xs;
+    font-weight: 500;
+    opacity: 0.9;
+    margin-top: 4px;
   }
-}
 
-.point-icon {
-  font-size: $font-size-2xl;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
+  // Точки
+  .points-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+    margin: $spacing-lg 0;
 
-.point-description {
-  font-size: $font-size-lg;
-  color: $color-text-medium;
-  line-height: 1.6;
-  margin: 0;
-}
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
-// Стили для достижений
-.achievements-content {
-  width: 100%;
-}
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
 
-.achievements-title {
-  font-size: $font-size-xl;
-  font-weight: 600;
-  color: #065f46;
-  margin: 0 0 $spacing-sm 0;
-}
+  .point-item {
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    border-radius: $border-radius-md;
+    padding: $spacing-lg;
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    transition: all 0.3s ease;
 
-// Стили для features
-.features-section {
-  margin: $spacing-xl 0;
-}
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    }
+  }
 
-.features-title {
-  font-size: $font-size-xl;
-  font-weight: 600;
-  color: $color-text-dark;
-  margin: 0 0 $spacing-lg 0;
-}
-
-.feature-card {
-  display: flex;
-  align-items: flex-start;
-  gap: $spacing-md;
-  padding: $spacing-lg;
-
-  .feature-icon {
+  .point-icon {
     font-size: $font-size-2xl;
     flex-shrink: 0;
     margin-top: 2px;
   }
 
-  .feature-text {
+  .point-description {
+    font-size: $font-size-lg;
+    color: $color-text-medium;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  // Достижения
+  .achievements-content {
+    width: 100%;
+  }
+
+  .achievements-title {
+    font-size: $font-size-xl;
+    font-weight: 600;
+    color: #065f46;
+    margin: 0 0 $spacing-sm 0;
+  }
+
+  // Features
+  .features-section {
+    margin: $spacing-xl 0;
+
+    &-title {
+      font-size: $font-size-xl;
+      font-weight: 600;
+      color: $color-text-dark;
+      margin: 0 0 $spacing-lg 0;
+    }
+  }
+
+  .feature-card {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+
+    &-icon {
+      font-size: $font-size-2xl;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    &-text {
+      font-size: $font-size-lg;
+      color: #1e40af;
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+
+  // Approach
+  .approach-alert {
+    .approach {
+      &-content {
+        width: 100%;
+      }
+
+      &-title {
+        font-size: $font-size-xl;
+        font-weight: 600;
+        color: #6d28d9;
+        margin: 0 0 $spacing-xs 0;
+      }
+
+      &-text {
+        font-size: $font-size-lg;
+        color: #6d28d9;
+        line-height: 1.7;
+        margin: 0;
+      }
+    }
+  }
+
+  // Improvements
+  .improvements-section {
+    margin: $spacing-xl 0;
+
+    &-title {
+      font-size: $font-size-xl;
+      font-weight: 600;
+      color: $color-text-dark;
+      margin: 0 0 $spacing-lg 0;
+    }
+  }
+
+  .improvement-card {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    text-align: left;
+
+    &-icon {
+      font-size: $font-size-2xl;
+      flex-shrink: 0;
+    }
+
+    &-text {
+      font-size: $font-size-lg;
+      color: #065f46;
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+
+  // Факты
+  .facts-section {
+    margin: $spacing-xl 0;
+
+    &-title {
+      font-size: $font-size-xl;
+      font-weight: 600;
+      color: $color-text-dark;
+      margin: 0 0 $spacing-lg 0;
+    }
+  }
+
+  .facts-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  .fact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-radius: $border-radius-md;
+    border: 1px solid #93c5fd;
+  }
+
+  .fact-text {
     font-size: $font-size-lg;
     color: #1e40af;
     line-height: 1.6;
     margin: 0;
+    flex: 1;
   }
-}
 
-// Стили для approach
-.approach-alert {
-  .approach-content {
+  // Timeline
+  .timeline-section {
+    background: white;
+    border-radius: $border-radius-xl;
+    padding: $spacing-4xl;
+    box-shadow: $shadow-md;
+    margin-top: $spacing-xl;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      padding: $spacing-xl;
+    }
+
+    @media (max-width: 480px) {
+      border-radius: $border-radius-lg;
+      padding: $spacing-lg;
+    }
+  }
+
+  .timeline-title {
+    font-size: $font-size-4xl;
+    font-weight: 700;
+    color: $color-text-dark;
+    text-align: center;
+    margin: 0 0 $spacing-3xl 0;
+
+    @media (max-width: 768px) {
+      font-size: $font-size-2xl;
+      margin-bottom: $spacing-xl;
+    }
+
+    @media (max-width: 480px) {
+      font-size: $font-size-xl;
+    }
+  }
+
+  .timeline-track {
+    position: relative;
+    height: 120px;
+    margin: 0 $spacing-lg;
+
+    @media (max-width: 768px) {
+      height: 100px;
+    }
+  }
+
+  .timeline-progress {
+    position: absolute;
+    top: 1em;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      $color-warning 0%,
+      $color-secondary 50%,
+      $color-primary 100%
+    );
+    border-radius: 2px;
+  }
+
+  .timeline-milestones {
+    position: relative;
+    height: 100%;
     width: 100%;
   }
 
-  .approach-title {
-    font-size: $font-size-xl;
+  .timeline-milestone {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+
+    @media (max-width: 768px) {
+      width: 80px;
+    }
+  }
+
+  .milestone-dot {
+    width: 2.3em;
+    height: 2.3em;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    margin-bottom: 12px;
+    border: 0.3em solid white;
+
+    @media (max-width: 768px) {
+      width: 1.3em;
+      height: 1.3em;
+    }
+  }
+
+  .milestone-label {
+    font-size: $font-size-base;
     font-weight: 600;
-    color: #6d28d9;
-    margin: 0 0 $spacing-xs 0;
+    color: $color-text-dark;
+    text-align: center;
+    margin-bottom: $spacing-xs;
   }
 
-  .approach-text {
-    font-size: $font-size-lg;
-    color: #6d28d9;
-    line-height: 1.7;
-    margin: 0;
-  }
-}
-
-// Стили для improvements
-.improvements-section {
-  margin: $spacing-xl 0;
-}
-
-.improvements-title {
-  font-size: $font-size-xl;
-  font-weight: 600;
-  color: $color-text-dark;
-  margin: 0 0 $spacing-lg 0;
-}
-
-.improvement-card {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  padding: $spacing-lg;
-  text-align: left;
-
-  .improvement-icon {
-    font-size: $font-size-2xl;
-    flex-shrink: 0;
-  }
-
-  .improvement-text {
-    font-size: $font-size-lg;
-    color: #065f46;
-    line-height: 1.6;
-    margin: 0;
-  }
-}
-
-// Стили для фактов
-.facts-section {
-  margin: $spacing-xl 0;
-}
-
-.facts-title {
-  font-size: $font-size-xl;
-  font-weight: 600;
-  color: $color-text-dark;
-  margin: 0 0 $spacing-lg 0;
-}
-
-.facts-list {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-}
-
-.fact-item {
-  display: flex;
-  align-items: flex-start;
-  gap: $spacing-md;
-  padding: $spacing-lg;
-  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-  border-radius: $border-radius-md;
-  border: 1px solid #93c5fd;
-}
-
-.fact-text {
-  font-size: $font-size-lg;
-  color: #1e40af;
-  line-height: 1.6;
-  margin: 0;
-  flex: 1;
-}
-
-// Стили для timeline
-.timeline-section {
-  background: white;
-  border-radius: $border-radius-xl;
-  padding: $spacing-3xl;
-  box-shadow: $shadow-md;
-  margin-top: $spacing-xl;
-}
-
-.timeline-title {
-  font-size: $font-size-3xl;
-  font-weight: 700;
-  color: $color-text-dark;
-  text-align: center;
-  margin: 0 0 $spacing-3xl 0;
-}
-
-.timeline-track {
-  position: relative;
-  height: 120px;
-  margin: 0 $spacing-lg;
-}
-
-.timeline-progress {
-  position: absolute;
-  top: 60px;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(
-    90deg,
-    $color-warning 0%,
-    $color-secondary 50%,
-    $color-primary 100%
-  );
-  border-radius: 2px;
-}
-
-.timeline-milestones {
-  position: relative;
-  height: 100%;
-}
-
-.timeline-milestone {
-  position: absolute;
-  top: 0;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100px;
-}
-
-.milestone-dot {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  margin-bottom: $spacing-sm;
-  border: 4px solid white;
-}
-
-.milestone-label {
-  font-size: $font-size-base;
-  font-weight: 600;
-  color: $color-text-dark;
-  text-align: center;
-  margin-bottom: $spacing-xs;
-}
-
-.milestone-year {
-  font-size: $font-size-sm;
-  color: $color-text-light;
-  font-weight: 500;
-}
-
-.timeline-description {
-  text-align: center;
-  margin-top: $spacing-2xl;
-  padding-top: $spacing-xl;
-  border-top: 1px solid #e5e7eb;
-
-  p {
-    font-size: $font-size-xl;
+  .milestone-year {
+    font-size: $font-size-sm;
     color: $color-text-light;
     font-weight: 500;
-    margin: 0;
   }
-}
 
-// Timeline and page-unique styles
-.timeline-section {
-  padding: $spacing-4xl;
-  text-align: center;
-}
+  .timeline-description {
+    text-align: center;
+    margin-top: $spacing-2xl;
+    padding-top: $spacing-xl;
+    border-top: 1px solid #e5e7eb;
 
-.timeline-title {
-  font-size: $font-size-4xl;
-  margin-bottom: $spacing-3xl;
-}
+    p {
+      font-size: $font-size-xl;
+      color: $color-text-light;
+      font-weight: 500;
+      margin: 0;
 
-.timeline-track {
-  display: flex;
-  gap: $spacing-lg;
-  align-items: center;
-  justify-content: center;
-}
+      @media (max-width: 480px) {
+        font-size: $font-size-lg;
+      }
+    }
+  }
 
-.timeline-milestone {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100px;
-}
+  // Общие медиа-запросы
+  @media (max-width: 480px) {
+    .points-grid {
+      grid-template-columns: 1fr;
+    }
 
-.milestone-dot {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  margin-bottom: $spacing-sm;
-  border: 4px solid white;
-}
-
-.milestone-label {
-  font-size: $font-size-base;
-  font-weight: 600;
-  color: $color-text-dark;
-}
-.milestone-year {
-  font-size: $font-size-sm;
-  color: $color-text-light;
-}
-
-.timeline-description {
-  text-align: center;
-  margin-top: $spacing-2xl;
-  padding-top: $spacing-xl;
-  border-top: 1px solid #e5e7eb;
-}
-
-// Responsive tweaks specific to this page
-@media (max-width: 768px) {
-  .timeline-section {
-    padding: $spacing-xl;
-  }
-  .timeline-title {
-    font-size: $font-size-2xl;
-    margin-bottom: $spacing-xl;
-  }
-  .timeline-track {
-    height: 100px;
-  }
-  .timeline-milestone {
-    width: 80px;
-  }
-  .milestone-dot {
-    width: 36px;
-    height: 36px;
-  }
-}
-
-@media (max-width: 480px) {
-  .timeline-section {
-    border-radius: $border-radius-lg;
-    padding: $spacing-lg;
-  }
-  .timeline-title {
-    font-size: $font-size-xl;
-  }
-  .timeline-description p {
-    font-size: $font-size-lg;
-  }
-  .points-grid {
-    grid-template-columns: 1fr;
-  }
-  .lesson-grid--3 {
-    grid-template-columns: 1fr;
+    .lesson-grid--3 {
+      grid-template-columns: 1fr;
+    }
   }
 }
 </style>

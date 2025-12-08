@@ -1,171 +1,15 @@
 <script setup lang="ts">
-const sections = ref([
-  {
-    title: 'Контракты: углубленное изучение',
-    subtitle: 'Аккаунты и их устройство',
-    icon: '⚙️',
-    points: [
-      'Аккаунт и контракт на нижнем структурном уровне в TON — это взаимозаменяемые понятия.',
-      'Контракт состоит из данных, программного кода и баланса монет TON.',
-      'Контракты могут получать сообщения, обрабатывать и отправлять их, а также изменять собственный стейт.',
-    ],
-    features: [
-      {
-        title: '📬 Адрес контракта',
-        content:
-          'У каждого контракта есть идентификатор, или адрес. Он представляет собой криптографический хеш от исходных данных и кода контракта.',
-        explanation:
-          'Вы вряд ли захотите менять адрес контракта при каждом изменении его стейта, так что адрес контракта определяется, исходя именно из его первоначального стейта, из того, каким он был создан.',
-        icon: '🏷️',
-      },
-      {
-        title: '⛺ Локальность данных',
-        content: 'Вторая важная особенность контрактов — это их локальность.',
-        explanation:
-          'Все данные контракта полностью инкапсулированы, и с точки зрения программного кода каждый контракт может видеть только собственное хранилище и баланс. Он не может видеть стейт других контрактов.',
-        benefit:
-          'Любые изменения в контракте в рамках одной транзакции в контракте полностью независимы от изменений другого контракта в рамках другой транзакции. Это позволяет достигнуть неограниченной масштабируемости блокчейна TON.',
-        icon: '🔒',
-      },
-    ],
-    gradient: 'blue',
-  },
-  {
-    title: 'Что можно делать с контрактами?',
-    subtitle: 'Примеры использования',
-    icon: '💡',
-    question: 'Что вы можете создать с помощью контрактов?',
-    examples: [
-      {
-        title: 'Аккаунты пользователей',
-        description:
-          'Контракты позволяют вам создавать аккаунты пользователей. Фактически, в TON каждый аккаунт пользователя — это кастомизированный контракт кошелька.',
-        icon: '👛',
-      },
-      {
-        title: 'Контракты с мультиподписью',
-        description:
-          'Контракты, управляемые более чем одним пользовательским кошельком.',
-        icon: '👥',
-      },
-      {
-        title: 'Крупные децентрализованные приложения',
-        description: 'Создание сложных DApps на основе контрактов.',
-        icon: '🏗️',
-      },
-    ],
-    note: 'Контракты используются для создания сущностей, которые мы обычно не воспринимаем как контракты.',
-    gradient: 'purple',
-  },
-  {
-    title: 'Токены в TON',
-    subtitle: 'Отдельные контракты с собственным стейтом',
-    icon: '💰',
-    content:
-      'В TON любой токен, который вы можете отправлять, представляет собой отдельный контракт с собственным стейтом, определяющим некоторые параметры токена.',
-    parameters: [
-      {
-        name: 'Владелец',
-        description: 'Один из таких параметров — владелец.',
-        icon: '👑',
-      },
-    ],
-    process: {
-      title: 'Как изменить владельца токена?',
-      steps: [
-        'Отправить токену сообщение, которое будет содержать нового владельца токена.',
-        'Токен проверит, что у отправителя сообщения есть надлежащие права.',
-        'Изменит владельца указанным образом.',
-      ],
-      icon: '🔄',
-    },
-    gradient: 'orange',
-  },
-  {
-    title: 'Защита TON',
-    subtitle: 'Плата за функционирование в сети',
-    icon: '🛡️',
-    content:
-      'Чтобы защитить сеть от атак типа «отказ в обслуживании», все контракты должны платить за свое функционирование в сети.',
-    components: [
-      {
-        title: 'Стоимость газа',
-        icon: '⚡',
-        points: [
-          'Каждый раз при выполнении контракта вы работаете со стоимостью газа.',
-          'Исполнение любой инструкции в виртуальной машине TON (TVM) можно оценить в абстрактных единицах — в газе.',
-          'На уровне сети установлен такой параметр, как цена газа, который определяет, сколько TON вы должны заплатить за каждую инструкцию.',
-          'Чем дольше работает ваша программа, тем выше будет стоимость газа, и она будет вычитаться из баланса контракта.',
-          'Когда баланс вашего контракта опустится до нуля, его исполнение прекратится, и связанная транзакция завершится неудачей.',
-          'Плата за газ гарантирует, что вы не увеличите нагрузку на сеть TON без оплаты этой нагрузки.',
-        ],
-      },
-      {
-        title: 'Аренда',
-        icon: '⏳',
-        points: [
-          'TON взимает оплату — «аренду» — за каждый бит данных контракта каждую секунду его работы в сети.',
-          'Эта сумма вычитается из баланса контракта.',
-        ],
-        warning:
-          'При разработке смарт-контрактов нужно учитывать два важнейших параметра: стоимость газа для исполнения и аренду, которая будет выплачиваться на протяжении жизненного цикла контракта в сети.',
-      },
-    ],
-    gradient: 'red',
-  },
-  {
-    title: 'Замороженные контракты',
-    subtitle: 'Что происходит при нехватке средств',
-    icon: '❄️',
-    content:
-      'Если у контракта заканчиваются средства и он не может оплачивать аренду, то контракт замораживают.',
-    process: [
-      'Сеть выгрузит все данные контракта и заменит их криптографическим хешем последнего состояния контракта.',
-      'В этом случае данные не будут утеряны: сеть оптимизирует хранилище и выгрузит ценные данные из своего хранилища валидаторам.',
-    ],
-    recovery: {
-      title: 'Как восстановить контракт?',
-      description:
-        'Когда пользователь захочет заново запустить контракт, он должен будет предоставить свой снимок данных контракта, хеш которого совпадает с хешем, сохраненным в сети.',
-      icon: '🔮',
-    },
-    gradient: 'cyan',
-  },
-]);
-
-const keyPoints = ref([
-  {
-    text: 'Адрес контракта представляет собой криптографический хеш от исходных данных и кода контракта.',
-    icon: '🔐',
-  },
-  {
-    text: 'Все данные смарт-контрактов полностью инкапсулированы (изолированы друг от друга), и с точки зрения программного кода каждый контракт может видеть только собственное хранилище и баланс.',
-    icon: '🏠',
-  },
-  {
-    text: 'Токен, доступный для перевода в TON, представляет собой отдельный контракт с собственным стейтом, определяющим некоторые параметры токена.',
-    icon: '💰',
-  },
-  {
-    text: 'Смарт-контракты, по сути, представляют собой низкоуровневые «строительные блоки», с помощью которых можно создавать аккаунты-кошельки, аккаунты с мультиподписью, крупные децентрализованные приложения, уникальные токены и даже их коллекции.',
-    icon: '🧱',
-  },
-  {
-    text: 'TON взимает плату — «аренду» — за каждый бит данных контракта каждую секунду его работы в сети, и эта сумма вычитается из баланса контракта.',
-    icon: '💸',
-  },
-]);
-
-const summary = ref({
-  title: 'Заключение',
-  content:
-    'Смарт-контракты в TON — это фундаментальные строительные блоки, которые обеспечивают безопасность, масштабируемость и гибкость экосистемы. Понимание их устройства, включая адресацию, изоляцию данных, систему оплаты и механизмы восстановления, является ключом к эффективной разработке в сети TON.',
-});
+import {
+  sections as sectionsData,
+  keyPoints as keyPointsData,
+  summary as summaryData,
+} from './../../data/content/lesson4.content';
+const sections = ref(sectionsData);
+const keyPoints = ref(keyPointsData);
+const summary = ref(summaryData);
 </script>
-
 <template>
-  <div class="lesson-container">
-    <!-- Hero Section -->
+  <div class="lesson-container lesson4">
     <div class="lesson-hero">
       <h1 class="lesson-hero__title">
         <span class="lesson-hero__icon">🔧</span>
@@ -176,41 +20,34 @@ const summary = ref({
       </p>
     </div>
 
-    <!-- Key Points -->
     <section class="lesson-key-points">
       <div class="lesson-key-points__header">
         <div class="lesson-key-points__icon">📝</div>
         <h2 class="lesson-key-points__title">Краткие тезисы</h2>
       </div>
       <div class="lesson-key-points__content">
-        <div class="key-points-container">
+        <div class="summary-points">
           <div
             v-for="(point, index) in keyPoints"
             :key="index"
-            class="key-point-item"
+            class="summary-point"
           >
-            <div class="key-point-icon">{{ point.icon }}</div>
-            <div class="key-point-content">
-              <div class="lesson-number lesson-number--circle-sm">
-                {{ index + 1 }}
-              </div>
-              <p class="key-point-text">{{ point.text }}</p>
+            <div class="lesson-number lesson-number--circle-sm">
+              {{ index + 1 }}
             </div>
+            <p class="summary-point-text">{{ point.text }}</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Main Content -->
     <div class="lesson-content">
-      <!-- Contract Details -->
       <section
         v-for="(section, index) in sections"
         :key="index"
         class="lesson-section"
         :class="`contract-section--${index}`"
       >
-        <!-- Section Header -->
         <div class="lesson-section__header">
           <div
             class="lesson-section__icon-wrapper"
@@ -226,12 +63,11 @@ const summary = ref({
           </div>
         </div>
 
-        <!-- Points List -->
         <div v-if="section.points" class="section-points">
           <ul class="lesson-list lesson-list--unordered">
             <li
-              v-for="(point, pointIndex) in section.points"
-              :key="pointIndex"
+              v-for="(point, i) in section.points"
+              :key="i"
               class="lesson-list__item"
             >
               {{ point }}
@@ -239,24 +75,21 @@ const summary = ref({
           </ul>
         </div>
 
-        <!-- Content -->
         <p v-if="section.content" class="lesson-section__content">
           {{ section.content }}
         </p>
 
-        <!-- Features -->
         <div v-if="section.features" class="features-section">
           <div
-            v-for="(feature, featureIndex) in section.features"
-            :key="featureIndex"
+            v-for="feature in section.features"
+            :key="feature.title"
             class="lesson-card feature-card"
           >
-            <div class="feature-header">
-              <div class="feature-icon-wrapper gradient--blue">
-                <span class="feature-icon">{{ feature.icon }}</span>
-              </div>
-              <h3 class="lesson-card__title">{{ feature.title }}</h3>
-            </div>
+            <IconTitle
+              :icon="feature.icon"
+              :title="feature.title"
+              class="feature-header"
+            />
             <div class="feature-content">
               <p class="lesson-card__text">{{ feature.content }}</p>
               <div
@@ -264,9 +97,7 @@ const summary = ref({
                 class="lesson-alert lesson-alert--info explanation-alert"
               >
                 <div class="lesson-alert__icon">❓</div>
-                <p class="lesson-alert__text">
-                  {{ feature.explanation }}
-                </p>
+                <p class="lesson-alert__text">{{ feature.explanation }}</p>
               </div>
               <div
                 v-if="feature.benefit"
@@ -279,13 +110,10 @@ const summary = ref({
           </div>
         </div>
 
-        <!-- Question -->
         <div v-if="section.question" class="lesson-question">
           <div class="lesson-question__icon">❓</div>
           <h3 class="lesson-question__text">{{ section.question }}</h3>
         </div>
-
-        <!-- Examples -->
         <div v-if="section.examples" class="examples-section">
           <div class="lesson-grid lesson-grid--3">
             <div
@@ -293,22 +121,21 @@ const summary = ref({
               :key="exampleIndex"
               class="lesson-card example-card"
             >
-              <div class="example-icon">{{ example.icon }}</div>
-              <h4 class="example-title">{{ example.title }}</h4>
+              <IconTitle
+                :icon="example.icon"
+                :title="example.title"
+                class="example-header"
+              />
               <p class="example-description">
                 {{ example.description }}
               </p>
             </div>
           </div>
         </div>
-
-        <!-- Note -->
         <div v-if="section.note" class="lesson-alert lesson-alert--warning">
           <div class="lesson-alert__icon">💡</div>
           <p class="lesson-alert__text">{{ section.note }}</p>
         </div>
-
-        <!-- Parameters -->
         <div v-if="section.parameters" class="parameters-section">
           <h3 class="parameters-title">Параметры токена:</h3>
           <div class="parameters-list">
@@ -317,9 +144,12 @@ const summary = ref({
               :key="paramIndex"
               class="lesson-card parameter-card"
             >
-              <div class="parameter-icon">{{ param.icon }}</div>
+              <IconTitle
+                :icon="param.icon"
+                :title="param.name"
+                class="parameter-header"
+              />
               <div class="parameter-content">
-                <h4 class="parameter-name">{{ param.name }}</h4>
                 <p class="parameter-description">
                   {{ param.description }}
                 </p>
@@ -327,13 +157,13 @@ const summary = ref({
             </div>
           </div>
         </div>
-
-        <!-- Process -->
         <div v-if="section.process" class="lesson-example">
-          <div class="process-header">
-            <div class="process-icon">{{ section.process.icon }}</div>
-            <h3 class="lesson-example__title">{{ section.process.title }}</h3>
-          </div>
+          <IconTitle
+            v-if="section.process"
+            :icon="section.process.icon"
+            :title="section.process.title"
+            class="process-header"
+          />
           <ol class="lesson-example__steps">
             <li
               v-for="(step, stepIndex) in section.process.steps"
@@ -345,8 +175,6 @@ const summary = ref({
             </li>
           </ol>
         </div>
-
-        <!-- Components -->
         <div v-if="section.components" class="components-section">
           <div
             v-for="(component, componentIndex) in section.components"
@@ -354,10 +182,11 @@ const summary = ref({
             class="lesson-card component-card"
             :class="`component-card--${componentIndex}`"
           >
-            <div class="component-header">
-              <div class="component-icon">{{ component.icon }}</div>
-              <h3 class="component-title">{{ component.title }}</h3>
-            </div>
+            <IconTitle
+              :icon="component.icon"
+              :title="component.title"
+              class="component-header"
+            />
             <ul class="lesson-list lesson-list--unordered">
               <li
                 v-for="(point, pointIndex) in component.points"
@@ -376,8 +205,6 @@ const summary = ref({
             </div>
           </div>
         </div>
-
-        <!-- Process List -->
         <div v-if="section.process" class="process-list-section">
           <h3 class="process-list-title">Процесс заморозки:</h3>
           <ul class="lesson-list lesson-list--unordered">
@@ -390,8 +217,6 @@ const summary = ref({
             </li>
           </ul>
         </div>
-
-        <!-- Recovery -->
         <div v-if="section.recovery" class="lesson-alert lesson-alert--info">
           <div class="lesson-alert__icon">{{ section.recovery.icon }}</div>
           <div class="recovery-content">
@@ -402,8 +227,6 @@ const summary = ref({
           </div>
         </div>
       </section>
-
-      <!-- Development Considerations -->
       <section class="considerations-section">
         <h2 class="considerations-title">🧠 Что важно при разработке</h2>
         <div class="lesson-grid lesson-grid--3">
@@ -433,8 +256,6 @@ const summary = ref({
           </div>
         </div>
       </section>
-
-      <!-- Summary -->
       <section class="lesson-conclusion">
         <div class="lesson-conclusion__content">
           <h2 class="lesson-conclusion__title">{{ summary.title }}</h2>
@@ -446,83 +267,129 @@ const summary = ref({
 </template>
 
 <style lang="scss">
-// Page-unique styles for lesson 4 only
+.lesson4 {
+  .lesson-hero {
+    &__title {
+      font-size: 1.9rem;
+    }
+    &__subtitle {
+      color: $color-text-medium;
+      margin-top: $spacing-sm;
+    }
+    &__icon {
+      display: inline-block;
+      margin-right: $spacing-sm;
+    }
+  }
 
-.key-point-item {
-  display: flex;
-  align-items: flex-start;
-  gap: $spacing-lg;
-  padding: $spacing-xl;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-  border-radius: $border-radius-lg;
-  border: 1px solid #93c5fd;
-  border-left: 4px solid $color-primary;
-}
+  .lesson-key-points {
+    &__content {
+      .key-point-card {
+        padding: $spacing-lg;
+        border-radius: $border-radius-md;
+        box-shadow: $shadow-sm;
+        display: flex;
+        gap: $spacing-md;
+        align-items: flex-start;
 
-.feature-card .feature-header {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  margin-bottom: $spacing-md;
-}
-.parameter-card {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  padding: $spacing-lg;
-}
-.process-header {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  margin-bottom: $spacing-lg;
-}
-.component-card {
-  padding: $spacing-xl;
-}
-.component-card--0 {
-  border-left: 4px solid $color-primary;
-}
-.component-card--1 {
-  border-left: 4px solid $color-danger;
-}
+        .lesson-number {
+          flex: 0 0 auto;
+          margin-top: 0.2rem;
+        }
 
-// Responsive tweaks specific to this page
-@media (max-width: 768px) {
-  .key-point-item {
-    padding: $spacing-lg;
-    flex-direction: column;
-    gap: $spacing-md;
+        .lesson-card__text {
+          margin: 0;
+          color: $color-text-medium;
+        }
+      }
+    }
   }
-  .lesson-section__header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: $spacing-lg;
+
+  .lesson-content {
+    display: grid;
+    gap: $spacing-3xl;
+
+    .lesson-section {
+      padding: $spacing-lg;
+      border-radius: $border-radius-lg;
+
+      &__header {
+        display: flex;
+        gap: $spacing-md;
+        align-items: center;
+
+        .lesson-section__icon-wrapper {
+          width: 64px;
+          height: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 12px;
+        }
+
+        &-title-wrapper {
+          .lesson-section__title {
+            margin: 0;
+            font-size: 1.4rem;
+          }
+
+          .lesson-section__subtitle {
+            margin: 0;
+            color: $color-text-medium;
+            font-size: $font-size-sm;
+          }
+        }
+      }
+
+      .lesson-list__item {
+        margin-bottom: $spacing-sm;
+      }
+
+      .features-section {
+        display: flex;
+        gap: 1em;
+        .feature-card {
+          .feature-header {
+            display: flex;
+            gap: $spacing-md;
+            align-items: center;
+          }
+        }
+      }
+
+      .lesson-alert {
+        &--info {
+        }
+        &--warning {
+        }
+        &--success {
+        }
+      }
+    }
   }
-  .lesson-section__icon-wrapper {
-    width: 70px;
-    height: 70px;
-  }
-  .lesson-section__title {
-    font-size: $font-size-2xl;
-  }
-  .feature-card .feature-header {
-    flex-direction: column;
-    align-items: flex-start;
+
+  .lesson-question {
+    display: flex;
+    align-items: center;
     gap: $spacing-sm;
+    margin-top: $spacing-md;
+    .lesson-question__icon {
+      font-size: 1.2rem;
+    }
+    .lesson-question__text {
+      margin: 0;
+      font-weight: 600;
+    }
   }
-}
 
-@media (max-width: 480px) {
-  .lesson-section {
-    padding: $spacing-lg $spacing-md;
-    border-radius: $border-radius-lg;
-  }
-  .lesson-section__title {
-    font-size: $font-size-xl;
-  }
-  .lesson-grid--3 {
-    grid-template-columns: 1fr;
+  // Responsive tweaks
+  @media (max-width: 768px) {
+    .lesson-content {
+      grid-template-columns: 1fr;
+    }
+    .lesson-section & {
+      padding: $spacing-md;
+    }
   }
 }
 </style>
