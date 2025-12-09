@@ -1,5 +1,12 @@
 @use 'sass:list';
 
+// Option: enable a single variable font resource (if you have a variable font file).
+// Set this to `true` and provide valid paths to use one combined resource instead
+// of many per-weight files. Default is `false` to keep backwards-compatible per-weight woff2 faces.
+$use-variable-font: false !default;
+$variable-font-path: 'assets/fonts/Montserrat/Montserrat-Variable.woff2' !default;
+$variable-font-italic-path: 'assets/fonts/Montserrat/Montserrat-VariableItalic.woff2' !default;
+
 $fonts: (
   ('Thin', 100),
   ('ThinItalic', 100, italic),
@@ -24,23 +31,41 @@ $fonts: (
 @mixin font-face($name, $weight, $style: normal) {
   @font-face {
     font-family: 'Montserrat';
-    src:
-      url('assets/fonts/Montserrat/Montserrat-#{$name}.woff2') format('woff2'),
-      url('assets/fonts/Montserrat/Montserrat-#{$name}.woff') format('woff');
+    src: url('assets/fonts/Montserrat/Montserrat-#{$name}.woff2')
+      format('woff2');
     font-weight: $weight;
     font-style: $style;
     font-display: swap;
   }
 }
 
-@each $font in $fonts {
-  $name: list.nth($font, 1);
-  $weight: list.nth($font, 2);
+// If a variable font is available and enabled, register it as a single resource.
+@if $use-variable-font {
+  @font-face {
+    font-family: 'Montserrat';
+    src: url(#{$variable-font-path}) format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
 
-  //   Deprecation Warning [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
-  // Suggestion: if(sass(list.length($font) > 2): list.nth($font, 3); else: normal)
-  // More info: https://sass-lang.com/d/if-function
-  $style: if(list.length($font) > 2, list.nth($font, 3), normal);
+  @font-face {
+    font-family: 'Montserrat';
+    src: url(#{$variable-font-italic-path}) format('woff2');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+  }
+} @else {
+  @each $font in $fonts {
+    $name: list.nth($font, 1);
+    $weight: list.nth($font, 2);
+    $style: normal;
 
-  @include font-face($name, $weight, $style);
+    @if list.length($font) >2 {
+      $style: list.nth($font, 3);
+    }
+
+    @include font-face($name, $weight, $style);
+  }
 }

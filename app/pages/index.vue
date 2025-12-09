@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { navLinks, type navCard } from '~~/data/navigationLinks';
 
-const navigationCards = ref<navCard[]>(navLinks);
+// ref для динамики
+// const navigationCards = ref<navCard[]>(navLinks);
+const navigationCards = navLinks as navCard[];
 </script>
 
 <template>

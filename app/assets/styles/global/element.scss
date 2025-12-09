@@ -1,8 +1,3 @@
-$-card: (
-  'border-radius': 15px,
-  'padding': 20px,
-);
-
-@forward 'element-plus/theme-chalk/src/common/var.scss' with (
-  $card: $-card
-);
+@use 'element-plus/theme-chalk/src/card.scss';
+@use 'element-plus/theme-chalk/src/row.scss';
+@use 'element-plus/theme-chalk/src/col.scss';
