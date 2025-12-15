@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { services } from '~~/data/mapServices';
+import { services, type Service } from '~~/data/mapServices';
 
 const selectedService = ref(null);
 const dialogVisible = ref(false);
 
-const openDialog = (service) => {
+const openDialog = (service: Service) => {
   selectedService.value = service;
   dialogVisible.value = true;
 };
@@ -17,6 +17,21 @@ const getInitials = (name: string): string => {
     .join('')
     .toUpperCase();
 };
+
+// const getGridPosition = (service) => {
+//   const positions = {
+//     'infrastructure': { start: 46, end: 48, rowStart: 1, rowEnd: 2 },
+//     'DeFi': { start: 63, end: 64, rowStart: 7, rowEnd: 8 },
+//     // Добавьте другие категории и их позиции
+//   };
+
+//   const position = positions[service.category.toLowerCase()] || { start: 1, end: 1, rowStart: 1, rowEnd: 1 };
+
+//   return {
+//     'grid-column': `${position.start} / ${position.end + 1}`,
+//     'grid-row': `${position.rowStart} / ${position.rowEnd + 1}`
+//   };
+// };
 </script>
 
 <template>
@@ -26,12 +41,13 @@ const getInitials = (name: string): string => {
         <div v-for="n in 90" :key="n" class="grid-item">
           {{ n }}
         </div>
+        <!-- :style="getGridPosition(service)" -->
         <div
           v-for="service in services"
           :key="service.name"
           class="service-card grid-item"
         >
-          <div class="service-header" @click="openDialog(service)">
+          <div class="service-header" @click.native="openDialog(service)">
             <div class="service-logo clickable">
               <div class="logo-placeholder">
                 {{ getInitials(service.name) }}
@@ -209,6 +225,10 @@ const getInitials = (name: string): string => {
 
 .clickable {
   pointer-events: auto;
-  touch-action: manipulation;
+}
+
+.service-logo.clickable,
+.service-logo.clickable * {
+  touch-action: auto !important;
 }
 </style>
