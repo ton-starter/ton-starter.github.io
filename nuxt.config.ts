@@ -75,8 +75,11 @@ export default defineNuxtConfig({
       preprocessorOptions: {
         scss: {
           additionalData: `
-            @use "~/assets/styles/global/_variables.scss" as *;
+          @use "~/assets/styles/global/_variables.scss" as *;
+          @use "~/assets/styles/global/element/index.scss" as element;
           `,
+          // Подавляем предупреждения legacy if() в ElementPlus (можно убрать через пол года - посмотреть, обновили ли они кодовую базу)
+          silenceDeprecations: ['if-function'],
         },
       },
     },

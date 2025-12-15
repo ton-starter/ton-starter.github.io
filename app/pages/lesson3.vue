@@ -1,229 +1,61 @@
+<!-- app/pages/lesson3.vue -->
 <script setup lang="ts">
 definePageMeta({
   layout: 'lesson',
 });
-import {
-  sections as sectionsData,
-  keyPoints as keyPointsData,
-  conclusion as conclusionData,
-} from '~~/data/content/lesson3.content';
-const sections = ref(sectionsData);
-const keyPoints = ref(keyPointsData);
-const conclusion = ref(conclusionData);
+
+import type { LessonData } from '~/components/widgets/Lesson/model/types';
+import lesson3Content from '~~/data/content/lesson3.content';
+
+// Каст данных к типу
+const { sections, keyPoints, conclusion } = lesson3Content as LessonData;
+
+// const { activeSection, setActiveSection } = useLessonContent();
 </script>
 
 <template>
   <div class="lesson-container lesson3">
-    <!-- Hero Section -->
-    <div class="lesson-hero">
-      <h1 class="lesson-hero__title">
-        <span class="lesson-hero__icon">📈</span>
-        Урок 3: Эволюция блокчейнов
-      </h1>
-      <p class="lesson-hero__subtitle">
-        От Bitcoin к Ethereum и TON: три поколения блокчейн-сетей
-      </p>
-    </div>
+    <LessonHero
+      icon="📈"
+      title="Урок 3: Эволюция блокчейнов"
+      subtitle="От Bitcoin к Ethereum и TON: три поколения блокчейн-сетей"
+    />
 
-    <!-- Key Points -->
-    <section class="lesson-key-points">
-      <div class="lesson-key-points__header">
-        <div class="lesson-key-points__icon">📝</div>
-        <h2 class="lesson-key-points__title">Краткие тезисы</h2>
-      </div>
-      <div class="lesson-key-points__content">
-        <div class="lesson-grid lesson-grid--3">
-          <div
-            v-for="(point, index) in keyPoints"
-            :key="index"
-            class="key-point-card"
-            :class="`key-point-card--${Math.floor(index / 3)}`"
-          >
-            <div class="lesson-number lesson-number--circle">
-              {{ index + 1 }}
-            </div>
-            <p class="key-point-text">{{ point }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <LessonKeyPointsSection :points="keyPoints" />
 
-    <!-- Main Content -->
     <div class="lesson-content">
-      <!-- Sections -->
-      <section
+      <!-- <LessonSection
         v-for="(section, index) in sections"
         :key="index"
-        class="lesson-section"
-        :class="`generation-${index}`"
-      >
-        <!-- Section Header -->
-        <div class="lesson-section__header">
-          <div
-            class="lesson-section__icon-wrapper"
-            :class="`gradient--${section.gradient}`"
-          >
-            <div class="generation-badge">
-              {{ index + 1 }}
-            </div>
-          </div>
-          <div class="lesson-section__title-wrapper">
-            <h2 class="lesson-section__title">{{ section.title }}</h2>
-            <h3 class="lesson-section__subtitle">{{ section.subtitle }}</h3>
-          </div>
-        </div>
+        :section="section"
+        :index="index"
+      /> -->
+      <!-- Секция Bitcoin -->
+      <SectionBitcoin :section="sections[0]" :index="0" />
 
-        <!-- Content -->
-        <p class="lesson-section__content">
-          {{ section.content }}
-        </p>
+      <!-- Секция Ethereum -->
+      <SectionEthereum :section="sections[1]" :index="1" />
 
-        <!-- Points Grid -->
-        <div v-if="section.points" class="points-grid">
-          <div
-            v-for="(point, pointIndex) in section.points"
-            :key="pointIndex"
-            class="point-item"
-          >
-            <div class="point-icon">{{ point.icon }}</div>
-            <p class="point-description">{{ point.text }}</p>
-          </div>
-        </div>
+      <!-- Секция TON -->
+      <SectionTon :section="sections[2]" :index="2" />
 
-        <!-- Achievements -->
-        <div
-          v-if="section.achievements"
-          class="lesson-alert lesson-alert--success"
-        >
-          <div class="lesson-alert__icon">🏆</div>
-          <div class="achievements-content">
-            <h3 class="achievements-title">Достижения:</h3>
-            <ul class="lesson-list lesson-list--check">
-              <li
-                v-for="(achievement, achIndex) in section.achievements"
-                :key="achIndex"
-                class="lesson-list__item"
-              >
-                {{ achievement }}
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Limitation -->
-        <div
-          v-if="section.limitation"
-          class="lesson-alert lesson-alert--warning"
-        >
-          <div class="lesson-alert__icon">⚠️</div>
-          <p class="lesson-alert__text">{{ section.limitation }}</p>
-        </div>
-
-        <!-- Features -->
-        <div v-if="section.features" class="features-section">
-          <h3 class="features-title">Ключевые особенности:</h3>
-          <div class="lesson-grid lesson-grid--2">
-            <div
-              v-for="(feature, featureIndex) in section.features"
-              :key="featureIndex"
-              class="lesson-card feature-card"
-            >
-              <div class="feature-icon">{{ feature.icon }}</div>
-              <p class="feature-text">{{ feature.text }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Warning -->
-        <div v-if="section.warning" class="lesson-alert lesson-alert--danger">
-          <div class="lesson-alert__icon">{{ section.warning.icon }}</div>
-          <p class="lesson-alert__text">{{ section.warning.text }}</p>
-        </div>
-
-        <!-- Approach -->
-        <div
-          v-if="section.approach"
-          class="lesson-alert lesson-alert--info approach-alert"
-        >
-          <div class="lesson-alert__icon">🎯</div>
-          <div class="approach-content">
-            <h3 class="approach-title">Подход к масштабированию:</h3>
-            <p class="approach-text">{{ section.approach }}</p>
-          </div>
-        </div>
-
-        <!-- Improvements -->
-        <div v-if="section.improvements" class="improvements-section">
-          <h3 class="improvements-title">Улучшения:</h3>
-          <div class="lesson-grid lesson-grid--3">
-            <div
-              v-for="(improvement, impIndex) in section.improvements"
-              :key="impIndex"
-              class="lesson-card improvement-card"
-            >
-              <div class="improvement-icon">{{ improvement.icon }}</div>
-              <p class="improvement-text">{{ improvement.text }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Facts -->
-        <div v-if="section.facts" class="facts-section">
-          <h3 class="facts-title">Факты:</h3>
-          <div class="facts-list">
-            <div
-              v-for="(fact, factIndex) in section.facts"
-              :key="factIndex"
-              class="fact-item"
-            >
-              <div class="lesson-number lesson-number--circle-sm">
-                {{ factIndex + 1 }}
-              </div>
-              <p class="fact-text">{{ fact }}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Evolution Timeline -->
-      <section class="timeline-section">
-        <h2 class="timeline-title">📊 Эволюция блокчейнов</h2>
-        <div class="timeline-track">
-          <div class="timeline-progress"></div>
-          <div class="timeline-milestones">
-            <div
-              v-for="(section, index) in sections"
-              :key="index"
-              class="timeline-milestone"
-              :style="{ left: `${(index / (sections.length - 1)) * 100}%` }"
-            >
-              <div
-                class="milestone-dot"
-                :class="`gradient--${section.gradient}`"
-              ></div>
-              <div class="milestone-label">{{ section.title }}</div>
-              <div class="milestone-year">{{ 2009 + index * 6 }}</div>
-            </div>
-          </div>
-        </div>
-        <div class="timeline-description">
-          <p>
-            От простых переводов → к умным контрактам → к масштабируемым
-            решениям
-          </p>
-        </div>
-      </section>
-
-      <!-- Conclusion -->
-      <section class="lesson-conclusion">
-        <div class="lesson-conclusion__content">
-          <h2 class="lesson-conclusion__title">{{ conclusion.title }}</h2>
-          <p class="lesson-conclusion__text">{{ conclusion.content }}</p>
-        </div>
-      </section>
+      <EvolutionTimeline :sections="sections" />
+      <LessonConclusion :conclusion="conclusion" />
     </div>
   </div>
 </template>
+
+<!-- <style lang="scss">
+.lesson3 {
+  &-content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3xl;
+  }
+
+  // Специфичные стили для урока 3
+}
+</style> -->
 
 <style lang="scss">
 .lesson3 {
