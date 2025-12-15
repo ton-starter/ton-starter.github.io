@@ -187,9 +187,9 @@ const getInitials = (name: string): string => {
   height: 150vh;
   background: #f0f0f0;
   overflow: hidden;
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
   // transform: translate(-50%, -50%);
   // cursor: grab;
 }
@@ -201,7 +201,7 @@ const getInitials = (name: string): string => {
   gap: 10px;
   width: 100%;
   height: 100%;
-  padding: 30vh;
+  padding: 30vh 30vw;
 }
 
 .grid-item {
