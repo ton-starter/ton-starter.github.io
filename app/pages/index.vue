@@ -29,6 +29,19 @@ const navigationCards = navLinks as navCard[];
       </el-card>
     </el-col>
   </el-row>
+  <el-row class="custom-menu-grid flex flex-wrap gap-4" :gutter="30">
+    <el-col :sm="24" :span="24">
+      <el-card class="custom-card" shadow="hover" @click="navigateTo('/map')">
+        <template #header>
+          <div class="items-center">
+            <span class="item-icon">🪐</span>
+            <h3 class="item-title">Карта экосистемы</h3>
+          </div>
+        </template>
+        <p class="item-description">Обзор инфраструктуры</p>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <style lang="scss">

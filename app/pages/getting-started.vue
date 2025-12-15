@@ -62,6 +62,10 @@ const steps = ref([
     gradient: 'linear-gradient(135deg, #ef4444 0%, #f87171 100%)',
   },
 ]);
+
+function handleRestart() {
+  console.log('restart btn');
+}
 </script>
 
 <template>
@@ -172,7 +176,7 @@ const steps = ref([
           блокчейна TON.
         </p>
         <div class="guide__completion-actions">
-          <button class="guide__completion-button">Начать сначала</button>
+          <WhiteButton label="Начать сначала" @click="handleRestart" />
         </div>
       </div>
     </div>
