@@ -96,7 +96,7 @@ function handleRestart() {
             :style="{ background: step.gradient }"
           >
             <span class="guide__step-icon">{{ step.icon }}</span>
-            <span class="guide__step-number">{{ step.id + 1 }}</span>
+            <span class="guide__step-number">{{ step.id }}</span>
           </div>
           <div class="guide__step-title-wrapper">
             <h2 class="guide__step-title">{{ step.title }}</h2>

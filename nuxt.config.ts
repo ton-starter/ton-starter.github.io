@@ -19,7 +19,12 @@ export default defineNuxtConfig({
 
   css: ['~/assets/styles/global.scss'],
 
-  modules: ['@nuxt/test-utils', '@element-plus/nuxt', '@nuxtjs/i18n'],
+  modules: [
+    '@nuxt/test-utils',
+    '@element-plus/nuxt',
+    '@nuxtjs/i18n',
+    'v-gsap-nuxt',
+  ],
 
   elementPlus: {
     importStyle: 'scss',
