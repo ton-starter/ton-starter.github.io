@@ -37,31 +37,12 @@ const getInitials = (name: string): string => {
                 {{ getInitials(service.name) }}
               </div>
             </div>
-            <div class="service-info clickable">
-              <h3 class="service-name">{{ service.name }}</h3>
-              <span class="service-category">{{ service.category }}</span>
-            </div>
-          </div>
-
-          <p class="short-description">{{ service.shortDescription }}</p>
-
-          <div class="service-links">
-            <a
-              v-for="(link, index) in service.links"
-              :key="index"
-              :href="link.url"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="service-link"
-            >
-              {{ link.label }}
-            </a>
           </div>
         </div>
       </div>
     </div>
 
-    <el-dialog v-model="dialogVisible" title="Service Info" width="500">
+    <el-dialog v-model="dialogVisible" title="" width="500">
       <div v-if="selectedService">
         <h3>{{ selectedService.name }}</h3>
         <p>{{ selectedService.shortDescription }}</p>
@@ -76,6 +57,10 @@ const getInitials = (name: string): string => {
           >
             {{ link.label }}
           </a>
+        </div>
+
+        <div class="service-info">
+          <span class="service-category">{{ selectedService.category }}</span>
         </div>
       </div>
     </el-dialog>
@@ -224,5 +209,6 @@ const getInitials = (name: string): string => {
 
 .clickable {
   pointer-events: auto;
+  touch-action: manipulation;
 }
 </style>
