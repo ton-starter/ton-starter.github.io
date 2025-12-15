@@ -16,6 +16,9 @@
 <style lang="scss">
 .copyrights-line {
   width: 100%;
+
+  z-index: 1500;
+  position: relative;
   a {
     color: darkgray;
   }

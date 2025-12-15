@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { services } from '~~/data/mapServices';
 
+// Ссылка на область, которую можно перетаскивать
+const dragArea = ref(null);
+
 const getInitials = (name: string): string => {
   return name
     .split(' ')
@@ -13,33 +16,49 @@ const getInitials = (name: string): string => {
 
 <template>
   <div class="ecosystem-table">
-    <div class="services-grid">
-      <div v-for="service in services" :key="service.name" class="service-card">
-        <div class="service-header">
-          <div class="service-logo">
-            <!-- Заглушка для логотипа -->
-            <div class="logo-placeholder">{{ getInitials(service.name) }}</div>
+    <!--
+      v-gsap.add.fromTo="{ scale: 1 }"
+      v-gsap.add.to="{ opacity: 3 }" 
+        -->
+    <div id="drag-area" ref="dragArea" v-gsap.draggable.bounds="'body'">
+      <div class="grid-container">
+        <div v-for="n in 90" :key="n" class="grid-item">
+          {{ n }}
+        </div>
+        <div
+          v-for="service in services"
+          :key="service.name"
+          class="service-card grid-item"
+        >
+          <div class="service-header">
+            <div class="service-logo">
+              <div class="logo-placeholder">
+                {{ getInitials(service.name) }}
+              </div>
+            </div>
+            <div class="service-info">
+              <h3 class="service-name">{{ service.name }}</h3>
+              <span class="service-category">{{ service.category }}</span>
+            </div>
           </div>
-          <div class="service-info">
-            <h3 class="service-name">{{ service.name }}</h3>
-            <span class="service-category">{{ service.category }}</span>
+
+          <p class="short-description">{{ service.shortDescription }}</p>
+
+          <div class="service-links">
+            <a
+              v-for="(link, index) in service.links"
+              :key="index"
+              :href="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="service-link"
+            >
+              {{ link.label }}
+            </a>
           </div>
         </div>
 
-        <p class="short-description">{{ service.shortDescription }}</p>
-
-        <div class="service-links">
-          <a
-            v-for="(link, index) in service.links"
-            :key="index"
-            :href="link.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="service-link"
-          >
-            {{ link.label }}
-          </a>
-        </div>
+        <!-- другие элементы -->
       </div>
     </div>
   </div>
@@ -161,5 +180,43 @@ const getInitials = (name: string): string => {
     color: white;
     border-color: #0088cc;
   }
+}
+
+#drag-area {
+  width: 200vw;
+  height: 150vh;
+  background: #f0f0f0;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  // transform: translate(-50%, -50%);
+  // cursor: grab;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  padding: 30vh;
+}
+
+.grid-item {
+  background: #ccc;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+#drag-area:active {
+  cursor: grabbing;
+  background: #0088cc;
+}
+
+.Dot {
+  background-color: green;
 }
 </style>
