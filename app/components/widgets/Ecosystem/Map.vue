@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { services } from '~~/data/mapServices';
 
-// Ссылка на область, которую можно перетаскивать
-const dragArea = ref(null);
+const selectedService = ref(null);
+const dialogVisible = ref(false);
+
+const openDialog = (service) => {
+  selectedService.value = service;
+  dialogVisible.value = true;
+};
 
 const getInitials = (name: string): string => {
   return name
@@ -16,10 +21,6 @@ const getInitials = (name: string): string => {
 
 <template>
   <div class="ecosystem-table">
-    <!--
-      v-gsap.add.fromTo="{ scale: 1 }"
-      v-gsap.add.to="{ opacity: 3 }" 
-        -->
     <div id="drag-area" ref="dragArea" v-gsap.draggable.bounds="'body'">
       <div class="grid-container">
         <div v-for="n in 90" :key="n" class="grid-item">
@@ -30,13 +31,13 @@ const getInitials = (name: string): string => {
           :key="service.name"
           class="service-card grid-item"
         >
-          <div class="service-header">
-            <div class="service-logo">
+          <div class="service-header" @click="openDialog(service)">
+            <div class="service-logo clickable">
               <div class="logo-placeholder">
                 {{ getInitials(service.name) }}
               </div>
             </div>
-            <div class="service-info">
+            <div class="service-info clickable">
               <h3 class="service-name">{{ service.name }}</h3>
               <span class="service-category">{{ service.category }}</span>
             </div>
@@ -57,17 +58,32 @@ const getInitials = (name: string): string => {
             </a>
           </div>
         </div>
-
-        <!-- другие элементы -->
       </div>
     </div>
+
+    <el-dialog v-model="dialogVisible" title="Service Info" width="500">
+      <div v-if="selectedService">
+        <h3>{{ selectedService.name }}</h3>
+        <p>{{ selectedService.shortDescription }}</p>
+        <div class="service-links">
+          <a
+            v-for="(link, index) in selectedService.links"
+            :key="index"
+            :href="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="service-link"
+          >
+            {{ link.label }}
+          </a>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <style lang="scss">
 .ecosystem-table {
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
@@ -78,12 +94,6 @@ const getInitials = (name: string): string => {
     font-size: 28px;
     font-weight: 600;
   }
-}
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 20px;
 }
 
 .service-card {
@@ -99,6 +109,7 @@ const getInitials = (name: string): string => {
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
   }
 }
 
@@ -147,11 +158,7 @@ const getInitials = (name: string): string => {
 }
 
 .short-description {
-  color: #4b5563;
-  line-height: 1.5;
-  margin: 15px 0;
-  font-size: 14px;
-  min-height: 60px;
+  display: none; /* Скрываем описание */
 }
 
 .service-links {
@@ -191,7 +198,6 @@ const getInitials = (name: string): string => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  // cursor: grab;
 }
 
 .grid-container {
@@ -216,7 +222,7 @@ const getInitials = (name: string): string => {
   background: #0088cc;
 }
 
-.Dot {
-  background-color: green;
+.clickable {
+  pointer-events: auto;
 }
 </style>
