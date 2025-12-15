@@ -21,9 +21,6 @@ import TonImg from '@/assets/img/logo/ton_symbol.svg';
   justify-content: center;
   align-items: center;
 
-  z-index: 1500;
-  position: relative;
-
   &__title {
     font-size: 56px;
     font-weight: 600;

@@ -183,8 +183,8 @@ const getInitials = (name: string): string => {
 }
 
 #drag-area {
-  width: 200vw;
-  height: 150vh;
+  min-width: 100vw;
+  min-height: 100vh;
   background: #f0f0f0;
   overflow: hidden;
   // position: absolute;
@@ -192,6 +192,7 @@ const getInitials = (name: string): string => {
   // left: 50%;
   // transform: translate(-50%, -50%);
   // cursor: grab;
+  scale: 2;
 }
 
 .grid-container {
