@@ -7,7 +7,6 @@ definePageMeta({
 import type { LessonData } from '~/components/widgets/Lesson/model/types';
 import lesson3Content from '~~/data/content/lesson3.content';
 
-// Каст данных к типу
 const { sections, keyPoints, conclusion } = lesson3Content as LessonData;
 
 // const { activeSection, setActiveSection } = useLessonContent();
@@ -31,13 +30,13 @@ const { sections, keyPoints, conclusion } = lesson3Content as LessonData;
         :index="index"
       /> -->
       <!-- Секция Bitcoin -->
-      <SectionBitcoin :section="sections[0]" :index="0" />
+      <LessonSectionBitcoin :section="sections[0]" :index="0" />
 
       <!-- Секция Ethereum -->
-      <SectionEthereum :section="sections[1]" :index="1" />
+      <LessonSectionEthereum :section="sections[1]" :index="1" />
 
       <!-- Секция TON -->
-      <SectionTon :section="sections[2]" :index="2" />
+      <LessonSectionTon :section="sections[2]" :index="2" />
 
       <EvolutionTimeline :sections="sections" />
       <LessonConclusion :conclusion="conclusion" />
@@ -180,50 +179,6 @@ const { sections, keyPoints, conclusion } = lesson3Content as LessonData;
     margin: 0;
   }
 
-  // Достижения
-  .achievements-content {
-    width: 100%;
-  }
-
-  .achievements-title {
-    font-size: $font-size-xl;
-    font-weight: 600;
-    color: #065f46;
-    margin: 0 0 $spacing-sm 0;
-  }
-
-  // Features
-  .features-section {
-    margin: $spacing-xl 0;
-
-    &-title {
-      font-size: $font-size-xl;
-      font-weight: 600;
-      color: $color-text-dark;
-      margin: 0 0 $spacing-lg 0;
-    }
-  }
-
-  .feature-card {
-    display: flex;
-    align-items: flex-start;
-    gap: $spacing-md;
-    padding: $spacing-lg;
-
-    &-icon {
-      font-size: $font-size-2xl;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    &-text {
-      font-size: $font-size-lg;
-      color: #1e40af;
-      line-height: 1.6;
-      margin: 0;
-    }
-  }
-
   // Approach
   .approach-alert {
     .approach {
@@ -277,42 +232,6 @@ const { sections, keyPoints, conclusion } = lesson3Content as LessonData;
       line-height: 1.6;
       margin: 0;
     }
-  }
-
-  // Факты
-  .facts-section {
-    margin: $spacing-xl 0;
-
-    &-title {
-      font-size: $font-size-xl;
-      font-weight: 600;
-      color: $color-text-dark;
-      margin: 0 0 $spacing-lg 0;
-    }
-  }
-
-  .facts-list {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-md;
-  }
-
-  .fact-item {
-    display: flex;
-    align-items: flex-start;
-    gap: $spacing-md;
-    padding: $spacing-lg;
-    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-    border-radius: $border-radius-md;
-    border: 1px solid #93c5fd;
-  }
-
-  .fact-text {
-    font-size: $font-size-lg;
-    color: #1e40af;
-    line-height: 1.6;
-    margin: 0;
-    flex: 1;
   }
 
   // Timeline

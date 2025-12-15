@@ -18,3 +18,10 @@ export interface LessonData {
   keyPoints: string[];
   conclusion: { title: string; content: string };
 }
+
+export interface LessonConclusion {
+  title: string;
+  content: string;
+}
+
+export type LessonWarning = { icon: string; text: string };

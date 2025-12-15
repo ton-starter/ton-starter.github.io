@@ -1,22 +1,34 @@
 <script setup lang="ts">
+import type { LessonSection } from '~/components/widgets/Lesson/model/types';
 defineProps<{
-  title: string;
-  subtitle: string;
-  gradient: string;
-  generation: number;
+  section: LessonSection;
+  index: number;
 }>();
 </script>
 
 <template>
-  <div class="lesson-section__header">
-    <div class="lesson-section__icon-wrapper" :class="`gradient--${gradient}`">
-      <div class="generation-badge">
-        {{ generation }}
-      </div>
-    </div>
-    <div class="lesson-section__title-wrapper">
-      <h2 class="lesson-section__title">{{ title }}</h2>
-      <h3 class="lesson-section__subtitle">{{ subtitle }}</h3>
-    </div>
-  </div>
+  <LessonSectionWrapper :index="index">
+    <template #header>
+      <LessonSectionHeader
+        :title="section.title"
+        :subtitle="section.subtitle"
+        :gradient="section.gradient"
+        :generation="index + 1"
+      />
+    </template>
+
+    <p>{{ section.content }}</p>
+
+    <AchievementList
+      v-if="section.achievements"
+      :achievements="section.achievements"
+    />
+
+    <FeatureList v-if="section.features" :features="section.features" />
+    <LessonAlert
+      v-if="section.warning"
+      type="danger"
+      :warning="section.warning"
+    />
+  </LessonSectionWrapper>
 </template>

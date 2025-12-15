@@ -336,6 +336,7 @@ a {
 .lesson-alert {
   display: flex;
   align-items: flex-start;
+  justify-content: flex-start;
   gap: $spacing-sm;
   padding: $spacing-xl;
   border-radius: $border-radius-md;
