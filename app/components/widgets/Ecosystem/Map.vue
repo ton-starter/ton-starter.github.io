@@ -18,20 +18,30 @@ const getInitials = (name: string): string => {
     .toUpperCase();
 };
 
-// const getGridPosition = (service) => {
-//   const positions = {
-//     'infrastructure': { start: 46, end: 48, rowStart: 1, rowEnd: 2 },
-//     'DeFi': { start: 63, end: 64, rowStart: 7, rowEnd: 8 },
-//     // Добавьте другие категории и их позиции
-//   };
+const servicesWithPositions = services.map((service, index) => {
+  const category = service.category.toLowerCase();
+  let start, rowStart;
 
-//   const position = positions[service.category.toLowerCase()] || { start: 1, end: 1, rowStart: 1, rowEnd: 1 };
+  switch (category) {
+    case 'infrastructure':
+      start = 46 + (index % 3); // 46, 47, 48
+      rowStart = 1 + Math.floor(index / 3); // 1, 2
+      break;
+    case 'defi':
+      start = 63 + (index % 2); // 63, 64
+      rowStart = 7 + Math.floor(index / 2); // 7, 8
+      break;
+    default:
+      start = index % 10;
+      rowStart = Math.floor(index / 10);
+  }
 
-//   return {
-//     'grid-column': `${position.start} / ${position.end + 1}`,
-//     'grid-row': `${position.rowStart} / ${position.rowEnd + 1}`
-//   };
-// };
+  return {
+    ...service,
+    gridColumn: `${start} / ${start + 1}`,
+    gridRow: `${rowStart} / ${rowStart + 1}`,
+  };
+});
 </script>
 
 <template>
@@ -41,14 +51,20 @@ const getInitials = (name: string): string => {
         <div v-for="n in 90" :key="n" class="grid-item">
           {{ n }}
         </div>
-        <!-- :style="getGridPosition(service)" -->
         <div
-          v-for="service in services"
+          v-for="service in servicesWithPositions"
           :key="service.name"
           class="service-card grid-item"
+          :style="{
+            'grid-column': service.gridColumn,
+            'grid-row': service.gridRow,
+          }"
         >
-          <div class="service-header" @click.native="openDialog(service)">
-            <div class="service-logo clickable">
+          <div
+            class="service-header clickable"
+            @click.native="openDialog(service)"
+          >
+            <div class="service-logo">
               <div class="logo-placeholder">
                 {{ getInitials(service.name) }}
               </div>
