@@ -76,6 +76,7 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    publicDir: resolve(__dirname, 'public'),
     css: {
       preprocessorOptions: {
         scss: {
@@ -91,6 +92,15 @@ export default defineNuxtConfig({
     define: {
       __BUILD_TIME__,
     },
+  },
+
+  nitro: {
+    publicAssets: [
+      {
+        baseURL: '/',
+        dir: resolve(__dirname, 'public'),
+      },
+    ],
   },
 
   i18n: {
