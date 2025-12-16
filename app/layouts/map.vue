@@ -9,21 +9,21 @@
 
 <style lang="scss">
 .map {
-  overflow: visible;
-}
-.backlink {
-  background: transparent;
-  color: #3498db;
-  text-decoration: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 2.5rem;
-  padding: 32px 24px 12px;
-  font-weight: 500;
-  cursor: pointer;
+  overflow: hidden;
+  .backlink {
+    background: transparent;
+    color: #3498db;
+    text-decoration: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 2.5rem;
+    padding: 32px 32px 12px;
+    font-weight: 500;
+    cursor: pointer;
 
-  z-index: 1500;
-  position: relative;
+    width: min-content;
+    z-index: 1500;
+  }
 }
 </style>

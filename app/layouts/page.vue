@@ -23,5 +23,6 @@
   padding: 32px 24px 12px;
   font-weight: 500;
   cursor: pointer;
+  width: min-content;
 }
 </style>

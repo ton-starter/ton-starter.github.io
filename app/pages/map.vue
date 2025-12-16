@@ -8,4 +8,8 @@ definePageMeta({
   <EcosystemMap />
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+body.map-page {
+  overflow: hidden;
+}
+</style>

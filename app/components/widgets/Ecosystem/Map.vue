@@ -1,12 +1,173 @@
 <script setup lang="ts">
 import { services, type Service } from '~~/data/mapServices';
 
-const selectedService = ref(null);
-const dialogVisible = ref(false);
+// Функция для позиционирования сервисов по категориям
+const getServicesWithPositions = (): (Service & {
+  gridColumn: string;
+  gridRow: string;
+  gridIndex: number;
+})[] => {
+  // Группируем сервисы по категориям
+  const groupedByCategory = services.reduce(
+    (acc, service) => {
+      const category = service.category.toLowerCase();
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(service);
+      return acc;
+    },
+    {} as Record<string, Service[]>,
+  );
 
-const openDialog = (service: Service) => {
-  selectedService.value = service;
-  dialogVisible.value = true;
+  // Определяем зоны для каждой категории (островки)
+  const categoryZones: Record<
+    string,
+    {
+      startRow: number;
+      startCol: number;
+      width: number;
+      height: number;
+    }
+  > = {
+    // Wallets - в левом верхнем углу (3x3 блок)
+    wallets: {
+      startRow: 1,
+      startCol: 1,
+      width: 3,
+      height: 3,
+    },
+    // Infrastructure - в правом верхнем углу (4x4 блок)
+    infrastructure: {
+      startRow: 1,
+      startCol: 6,
+      width: 3,
+      height: 3,
+    },
+    // Defi - в левом нижнем углу (4x4 блок)
+    defi: {
+      startRow: 6,
+      startCol: 1,
+      width: 3,
+      height: 3,
+    },
+    // Для других категорий можно добавить другие зоны
+    dev: {
+      startRow: 8,
+      startCol: 7,
+      width: 2,
+      height: 2,
+    },
+  };
+
+  const result: (Service & {
+    gridColumn: string;
+    gridRow: string;
+    gridIndex: number;
+  })[] = [];
+  const occupiedCells = new Set<string>();
+
+  // Заполняем сетку для каждой категории
+  for (const [category, categoryServices] of Object.entries(
+    groupedByCategory,
+  )) {
+    const zone = categoryZones[category] || {
+      startRow: 1,
+      startCol: 1,
+      width: 3,
+      height: 3,
+    };
+
+    // Вычисляем позиции внутри зоны с учетом уже занятых ячеек
+    let _placedCount = 0;
+    const maxAttempts = zone.width * zone.height;
+    let attempts = 0;
+
+    // Пытаемся разместить все сервисы категории
+    for (const service of categoryServices) {
+      let placed = false;
+
+      // Проверяем все ячейки в зоне
+      for (let row = 0; row < zone.height && !placed; row++) {
+        for (let col = 0; col < zone.width && !placed; col++) {
+          attempts++;
+          if (attempts > maxAttempts * 2) break; // Защита от бесконечного цикла
+
+          const cellRow = zone.startRow + row;
+          const cellCol = zone.startCol + col;
+          const cellKey = `${cellRow}-${cellCol}`;
+
+          // Если ячейка свободна, занимаем её
+          if (!occupiedCells.has(cellKey) && cellRow <= 10 && cellCol <= 10) {
+            // Вычисляем индекс ячейки в сетке 10x10 (от 1 до 100)
+            const gridIndex = (cellRow - 1) * 10 + cellCol;
+
+            result.push({
+              ...service,
+              gridColumn: `${cellCol} / ${cellCol + 1}`,
+              gridRow: `${cellRow} / ${cellRow + 1}`,
+              gridIndex: gridIndex,
+            });
+
+            occupiedCells.add(cellKey);
+            _placedCount++;
+            placed = true;
+          }
+        }
+      }
+      _placedCount = 0;
+      // Если не удалось разместить, пробуем найти любую свободную ячейку
+      if (!placed) {
+        for (let i = 1; i <= 100; i++) {
+          const row = Math.floor((i - 1) / 10) + 1;
+          const col = ((i - 1) % 10) + 1;
+          const cellKey = `${row}-${col}`;
+
+          if (!occupiedCells.has(cellKey)) {
+            result.push({
+              ...service,
+              gridColumn: `${col} / ${col + 1}`,
+              gridRow: `${row} / ${row + 1}`,
+              gridIndex: i,
+            });
+
+            occupiedCells.add(cellKey);
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  // Сортируем по позиции в сетке для правильного порядка отрисовки
+  return result.sort((a, b) => a.gridIndex - b.gridIndex);
+};
+
+const servicesWithPositions = getServicesWithPositions();
+
+// Вспомогательные функции для стилизации зон
+const isWalletsZone = (n: number): boolean => {
+  const row = Math.floor((n - 1) / 10) + 1;
+  const col = ((n - 1) % 10) + 1;
+  return row >= 1 && row <= 3 && col >= 1 && col <= 3;
+};
+
+const isInfrastructureZone = (n: number): boolean => {
+  const row = Math.floor((n - 1) / 10) + 1;
+  const col = ((n - 1) % 10) + 1;
+  return row >= 1 && row <= 4 && col >= 6 && col <= 9;
+};
+
+const isDefiZone = (n: number): boolean => {
+  const row = Math.floor((n - 1) / 10) + 1;
+  const col = ((n - 1) % 10) + 1;
+  return row >= 6 && row <= 9 && col >= 1 && col <= 4;
+};
+
+const isDevZone = (n: number): boolean => {
+  const row = Math.floor((n - 1) / 10) + 1;
+  const col = ((n - 1) % 10) + 1;
+  return row >= 8 && row <= 10 && col >= 7 && col <= 9;
 };
 
 const getInitials = (name: string): string => {
@@ -18,38 +179,33 @@ const getInitials = (name: string): string => {
     .toUpperCase();
 };
 
-const servicesWithPositions = services.map((service, index) => {
-  const category = service.category.toLowerCase();
-  let start, rowStart;
+const selectedService = ref(null);
+const dialogVisible = ref(false);
 
-  switch (category) {
-    case 'infrastructure':
-      start = 46 + (index % 3); // 46, 47, 48
-      rowStart = 1 + Math.floor(index / 3); // 1, 2
-      break;
-    case 'defi':
-      start = 63 + (index % 2); // 63, 64
-      rowStart = 7 + Math.floor(index / 2); // 7, 8
-      break;
-    default:
-      start = index % 10;
-      rowStart = Math.floor(index / 10);
-  }
-
-  return {
-    ...service,
-    gridColumn: `${start} / ${start + 1}`,
-    gridRow: `${rowStart} / ${rowStart + 1}`,
-  };
-});
+const openDialog = (service: Service) => {
+  console.log('Open dialog for:', service.name);
+  selectedService.value = service;
+  dialogVisible.value = true;
+};
 </script>
 
 <template>
   <div class="ecosystem-table">
     <div id="drag-area" ref="dragArea" v-gsap.draggable.bounds="'body'">
       <div class="grid-container">
-        <div v-for="n in 90" :key="n" class="grid-item">
-          {{ n }}
+        <!-- Сетка 10x10 -->
+        <div
+          v-for="n in 100"
+          :key="n"
+          class="grid-item"
+          :class="{
+            'wallets-zone': isWalletsZone(n),
+            'infrastructure-zone': isInfrastructureZone(n),
+            'defi-zone': isDefiZone(n),
+            'dev-zone': isDevZone(n),
+          }"
+        >
+          <!-- <span class="cell-number">{{ n }}</span> -->
         </div>
         <div
           v-for="service in servicesWithPositions"
@@ -59,21 +215,25 @@ const servicesWithPositions = services.map((service, index) => {
             'grid-column': service.gridColumn,
             'grid-row': service.gridRow,
           }"
+          :class="`category-${service.category.toLowerCase()}`"
         >
-          <div
-            class="service-header clickable"
-            @click.native="openDialog(service)"
-          >
+          <div class="service-header clickable" @click="openDialog(service)">
             <div class="service-logo">
-              <div class="logo-placeholder">
+              <div v-if="service.logo" class="logo-wrapper">
+                <img :src="`${service.logo}`" :alt="`${service.name}`" />
+              </div>
+              <div v-else class="logo-placeholder">
                 {{ getInitials(service.name) }}
               </div>
             </div>
+            <span> {{ service.name }}</span>
+            <!-- <div class="service-badge">
+              {{ service.category }}
+            </div> -->
           </div>
         </div>
       </div>
     </div>
-
     <el-dialog v-model="dialogVisible" title="" width="500">
       <div v-if="selectedService">
         <h3>{{ selectedService.name }}</h3>
@@ -117,7 +277,7 @@ const servicesWithPositions = services.map((service, index) => {
   background: #fff;
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -125,52 +285,59 @@ const servicesWithPositions = services.map((service, index) => {
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
 }
 
-.service-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.service-logo {
-  .logo-placeholder {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, #0088cc, #00aaff);
-    color: white;
-    border-radius: 10px;
+.service {
+  &-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 18px;
+    gap: 15px;
+    padding: 10px 15px;
   }
-}
-
-.service-info {
-  flex: 1;
-
-  .service-name {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: #1f2937;
+  &-logo {
+    .logo-wrapper {
+      height: 50px;
+      width: 50px;
+      @include flex-center;
+      img {
+        max-width: 100%;
+      }
+    }
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #0088cc, #00aaff);
+      color: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
   }
+  &-info {
+    flex: 1;
+    .service-name {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2937;
+    }
 
-  .service-category {
-    display: inline-block;
-    padding: 4px 8px;
-    background: #f3f4f6;
-    color: #6b7280;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    margin-top: 4px;
+    .service-category {
+      display: inline-block;
+      padding: 4px 8px;
+      background: #f3f4f6;
+      color: #6b7280;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 4px;
+    }
   }
 }
 
@@ -209,7 +376,7 @@ const servicesWithPositions = services.map((service, index) => {
 #drag-area {
   min-width: 200vw;
   min-height: 200vh;
-  background: #f0f0f0;
+  background: transparent;
   overflow: hidden;
   position: absolute;
   top: 50%;
@@ -221,17 +388,33 @@ const servicesWithPositions = services.map((service, index) => {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
-  gap: 10px;
+  gap: 0;
   width: 100%;
   height: 100%;
   padding: 30vh 30vw;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: url('/img/logo/map/back_400x400.jpg') no-repeat center center /
+      auto;
+
+    opacity: 0.3;
+  }
 }
 
 .grid-item {
-  background: #ccc;
+  background: transparent;
   padding: 10px;
   text-align: center;
-  border-radius: 5px;
+  &.service-card {
+    background-color: #f9f9f9;
+  }
 }
 
 #drag-area:active {
