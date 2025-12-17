@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-
 const address = ref<string | null>(null);
 let tonConnect: any = null;
 
@@ -12,13 +10,12 @@ const shortAddress = computed(() => {
 async function initTonConnect() {
   if (typeof window === 'undefined') return;
   try {
-    const mod = await import('@tonconnect/sdk');
-    const TonConnect = mod.TonConnect ?? mod.default ?? mod;
-    tonConnect = new TonConnect({
-      manifestUrl: `${window.location.origin}/tonconnect-manifest.json`,
-    });
+    // use existing helper to create TonConnectUI instance
+    // use Nuxt useState to store connected address (no Pinia required)
+    const walletState = useState('walletAddress', () => null as string | null);
+    tonConnect = getConnector(null) || getConnector(undefined);
 
-    // attach event listeners if SDK supports them
+    // attach event listeners if available
     try {
       if (typeof tonConnect.on === 'function') {
         tonConnect.on('connect', (payload: any) => {
@@ -31,24 +28,20 @@ async function initTonConnect() {
         tonConnect.on('disconnect', () => {
           address.value = null;
         });
-      } else if (typeof tonConnect.subscribe === 'function') {
-        // some versions expose a subscribe/subscribe method
-        tonConnect.subscribe((st: any) => {
-          const addr =
-            st?.account?.address ||
-            tonConnect.account?.address ||
-            tonConnect.wallet?.account?.address;
-          if (st?.status === 'connected' && addr) address.value = addr;
-          if (st?.status === 'disconnected') address.value = null;
-        });
       }
-    } catch (e) {
-      console.warn('TonConnect init failed', e);
+    } catch (_e) {
+      // ignore
     }
 
-    const acc = tonConnect.account || tonConnect.wallet?.account;
-    if (acc && acc.address) address.value = acc.address;
-  } catch (e) {
+    const acc =
+      tonConnect?.account ||
+      tonConnect?.wallet?.account ||
+      tonConnect?.state?.account;
+    if (acc && acc.address) {
+      address.value = acc.address;
+      walletState.value = acc.address;
+    }
+  } catch (_e) {
     console.warn('TonConnect init failed', e);
   }
 }
@@ -57,26 +50,75 @@ async function connect() {
   if (!tonConnect) {
     await initTonConnect();
     if (!tonConnect) {
-      alert('TonConnect SDK not available. Please install @tonconnect/sdk');
+      alert(
+        'TonConnect UI not available. Please ensure @tonconnect/ui is installed',
+      );
       return;
     }
   }
   try {
-    // try connect() — different SDK versions may expose different APIs
+    // Try direct connect API if available
     if (typeof tonConnect.connect === 'function') {
       const res = await tonConnect.connect();
-      address.value =
+      const addr =
         res?.account?.address ||
-        tonConnect.account?.address ||
-        tonConnect.wallet?.account?.address ||
+        tonConnect?.account?.address ||
+        tonConnect?.wallet?.account?.address ||
+        tonConnect?.state?.account?.address ||
         null;
-      return;
+      if (addr) {
+        address.value = addr;
+        const walletState = useState(
+          'walletAddress',
+          () => null as string | null,
+        );
+        walletState.value = addr;
+        return;
+      }
     }
 
-    // fallback: try request permission via UI library
-    if (typeof tonConnect.request === 'function') {
-      const res = await tonConnect.request({ method: 'ton_requestAccounts' });
-      address.value = res?.[0] || null;
+    // Try various UI entry points used by different versions
+    if (typeof tonConnect.openUI === 'function') await tonConnect.openUI();
+    else if (typeof tonConnect.show === 'function') await tonConnect.show();
+    else if (tonConnect?.modal && typeof tonConnect.modal.open === 'function')
+      await tonConnect.modal.open();
+    else if (
+      tonConnect?.singleWalletModal &&
+      typeof tonConnect.singleWalletModal.open === 'function'
+    )
+      await tonConnect.singleWalletModal.open();
+    else if (typeof tonConnect.open === 'function') await tonConnect.open();
+
+    // If we reached here, UI was attempted to open — poll for address (fallback)
+    const waitForAddress = async (timeout = 15000) => {
+      const start = Date.now();
+      while (Date.now() - start < timeout) {
+        const candidate =
+          // possible locations where address may appear
+          tonConnect?.walletInfo?.address ||
+          tonConnect?.walletInfo?.wallet?.address ||
+          tonConnect?.connector?._wallet?.address ||
+          tonConnect?.connector?._wallet?.account?.address ||
+          tonConnect?.modal?.connector?._wallet?.address ||
+          tonConnect?.modal?.connector?._wallet?.account?.address ||
+          tonConnect?.account?.address ||
+          tonConnect?.wallet?.account?.address ||
+          tonConnect?.state?.account?.address ||
+          null;
+        if (candidate) return candidate;
+        await new Promise((r) => setTimeout(r, 500));
+      }
+      return null;
+    };
+
+    const found = await waitForAddress(15000);
+    if (found) {
+      address.value = found;
+      const walletState = useState(
+        'walletAddress',
+        () => null as string | null,
+      );
+      walletState.value = found;
     }
   } catch (e) {
     console.warn('connect error', e);
@@ -91,6 +133,8 @@ function disconnect() {
     console.warn('disconnect failed', e);
   }
   address.value = null;
+  const walletState = useState('walletAddress', () => null as string | null);
+  walletState.value = null;
 }
 
 function onClick() {
