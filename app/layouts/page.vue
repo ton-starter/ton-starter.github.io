@@ -3,7 +3,7 @@
 <template>
   <div class="main-app-block">
     <NuxtLink to="/" class="backlink"> 🔙 </NuxtLink>
-
+    <ConnectWallet />
     <main class="container">
       <slot />
     </main>

@@ -1,0 +1,8 @@
+{
+  "name": "TON Starter Kit",
+  "short_name": "TON",
+  "description": "TonConnect manifest for TON Starter Kit",
+  "icons": ["/ton.svg"],
+  "start_url": "/",
+  "display": "standalone"
+}
