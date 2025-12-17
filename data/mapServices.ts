@@ -24,6 +24,36 @@ export const services: Service[] = [
     logo: '/img/logo/map/wallet_tg_logo.jpg',
   },
   {
+    name: 'Tonkeeper',
+    category: 'Wallets',
+    shortDescription:
+      'Популярный некастодиальный кошелёк для экосистемы TON, известный своей скоростью, простотой использования и низкими комиссиями.',
+    description:
+      'Tonkeeper — это многофункциональный некастодиальный кошелёк, доступный как мобильное приложение, браузерное расширение и веб-версия. Он позволяет покупать Toncoin за фиат, отправлять и получать средства, обменивать токены, стейкать TON и взаимодействовать с децентрализованными приложениями (dApps). Ключи пользователя хранятся на устройстве, регистрация или KYC не требуются.',
+    links: [{ label: 'tonkeeper.com', url: 'https://tonkeeper.com' }],
+    logo: '/img/logo/map/wallet_tonkeeper_logo.png',
+  },
+  {
+    name: 'MyTonWallet',
+    category: 'Wallets',
+    shortDescription:
+      'Кроссплатформенный, некастодиальный кошелёк с открытым исходным кодом, предлагающий самый широкий функционал в экосистеме TON.',
+    description:
+      'MyTonWallet — это многофункциональный кошелёк, доступный в виде браузерного расширения, а также приложения для ПК и мобильных устройств. Он поддерживает несколько аккаунтов, работу с NFT, токенами (Jettons), сервисами TON DNS и TON Sites, а также стейкинг. Пользователь имеет полный контроль над своими средствами, а проект следует принципам открытого исходного кода.',
+    links: [{ label: 'GitHub', url: 'https://github.com/mytonwallet' }],
+    logo: '/img/logo/map/wallet_mytonwallet_logo.png',
+  },
+  {
+    name: 'Tonhub',
+    category: 'Wallets',
+    shortDescription:
+      'Некастодиальный мобильный кошелёк с акцентом на конфиденциальность и быстрые транзакции, не требующий регистрации.',
+    description:
+      'Tonhub — это приватный мобильный кошелёк для отправки, получения, хранения и стейкинга Toncoin. Для его использования не требуется предоставлять личную информацию или проходить регистрацию. Доступ защищён PIN-кодом или биометрией. Кошелёк поддерживает низкие комиссии сети TON, моментальные переводы и интеграцию с dApps через TonConnect.',
+    links: [{ label: 'tonhub.app', url: 'https://tonhub.app' }],
+    logo: '/img/logo/map/wallet_tonhub_logo.svg',
+  },
+  {
     name: 'TON DNS',
     category: 'Infrastructure',
     shortDescription:
@@ -117,8 +147,8 @@ export const services: Service[] = [
       'Ведущий протокол ликвидного стейкинга на TON для получения вознаграждений с производным tsTON.',
     description:
       'Tonstakers имеет самый высокий TVL с более чем $260M в стейкинге, предлагает 3%+ APR без локапов; имеет открытый исходный код, аудирован Certik и позволяет использовать tsTON в DeFi.',
-    links: [{ label: 'coingecko', url: 'https://coingecko.com' }],
-    logo: '/img/logo/map/wallet_tg_logo.jpg',
+    links: [{ label: 'tonstakers.com', url: 'https://tonstakers.com/' }],
+    logo: '/img/logo/map/Tonstakers_logo.svg',
   },
   {
     name: 'EVAA Protocol',
@@ -127,8 +157,8 @@ export const services: Service[] = [
       'Интегрированный в Telegram кредитный протокол для займа и кредитования активов TON.',
     description:
       'Инкубированный TON Starter, EVAA обеспечивает плавное кредитование с интеграциями типа STON.fi для комбинированных свопов; фокусируется на удобном DeFi внутри Telegram.',
-    links: [{ label: 'gate.com', url: 'https://gate.com' }],
-    logo: '/img/logo/map/wallet_tg_logo.jpg',
+    links: [{ label: 'evaa.finance', url: 'https://evaa.finance/' }],
+    logo: '/img/logo/map/EVAA_logo.png',
   },
   {
     name: 'Ethena',
@@ -136,29 +166,31 @@ export const services: Service[] = [
     shortDescription: 'Протокол доходных стейблкоинов с USDe и tsUSDe на TON.',
     description:
       'Ethena предлагает до 20% APY через кампании, с предложением $193.9M и образовательными хабами; интегрирует обучающие стимулы для вовлечения пользователей.',
-    links: [{ label: 'ton.org', url: 'https://ton.org' }],
-    logo: '/img/logo/map/wallet_tg_logo.jpg',
+    links: [{ label: 'ethena.fi', url: 'https://ethena.fi/' }],
+    logo: '/img/logo/map/Ethena_logo.png',
   },
   {
     name: 'TON Builders',
     category: 'dev',
-    shortDescription: 'Протокол доходных стейблкоинов с USDe и tsUSDe на TON.',
+    shortDescription:
+      'TON Builders — это сообщество разработчиков, создающих приложения и сервисы в экосистеме блокчейна TON ',
     description:
-      'Ethena предлагает до 20% APY через кампании, с предложением $193.9M и образовательными хабами; интегрирует обучающие стимулы для вовлечения пользователей.',
+      'TON Builders — это сообщество разработчиков, создающих приложения и сервисы в экосистеме блокчейна TON (The Open Network). Цель — развивать инфраструктуру, инструменты и пользовательские решения на этой платформе.',
     links: [
       {
         label: 'ton.org',
         url: 'https://builders.ton.org/founder/support-programs',
       },
     ],
-    logo: '/img/logo/map/nest_logo.svg',
+    logo: '/img/logo/map/TON_Builders.svg',
   },
   {
     name: 'TON Nest',
     category: 'dev',
-    shortDescription: 'Протокол доходных стейблкоинов с USDe и tsUSDe на TON.',
+    shortDescription:
+      'TON Nest — это акселерационная программа и грантовый фонд для проектов и стартапов, которые развивают экосистему блокчейна TON (The Open Network).',
     description:
-      'Ethena предлагает до 20% APY через кампании, с предложением $193.9M и образовательными хабами; интегрирует обучающие стимулы для вовлечения пользователей.',
+      'TON Nest — это акселерационная программа и грантовый фонд для проектов и стартапов, которые развивают экосистему блокчейна TON (The Open Network).',
     links: [
       {
         label: 'ton.org',

@@ -401,8 +401,7 @@ const openDialog = (service: Service) => {
     z-index: -1;
     width: 100%;
     height: 100%;
-    background: url('/img/logo/map/back_400x400.jpg') no-repeat center center /
-      auto;
+    background: url('/img/logo/map/ton-bg.svg') no-repeat center center / auto;
 
     opacity: 0.3;
   }
@@ -419,7 +418,6 @@ const openDialog = (service: Service) => {
 
 #drag-area:active {
   cursor: grabbing;
-  background: #0088cc;
 }
 
 .clickable {
