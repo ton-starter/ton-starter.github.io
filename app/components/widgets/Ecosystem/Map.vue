@@ -379,9 +379,9 @@ const openDialog = (service: Service) => {
   background: transparent;
   overflow: hidden;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: -30%;
+  left: -35%;
+  // transform: translate(10%, -100%);
 }
 
 .grid-container {

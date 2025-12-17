@@ -1,177 +1,127 @@
+<!-- components/WalletButton.vue -->
 <script setup lang="ts">
-import { getConnector } from '@/ton-connect';
+import { useWallet } from '@/composables/useWallet';
 
-const address = ref<string | null>(null);
-let tonConnect: any = null;
-
-const shortAddress = computed(() => {
-  if (!address.value) return '👛 Подключить';
-  return `${address.value.slice(0, 6)}...${address.value.slice(-4)}`;
-});
-
-async function initTonConnect() {
-  if (typeof window === 'undefined') return;
-  try {
-    // use existing helper to create TonConnectUI instance
-    // use Nuxt useState to store connected address (no Pinia required)
-    const walletState = useState('walletAddress', () => null as string | null);
-    tonConnect = getConnector(null) || getConnector(undefined);
-
-    // attach event listeners if available
-    try {
-      if (typeof tonConnect.on === 'function') {
-        tonConnect.on('connect', (payload: any) => {
-          const addr =
-            payload?.account?.address ||
-            tonConnect.account?.address ||
-            tonConnect.wallet?.account?.address;
-          if (addr) address.value = addr;
-        });
-        tonConnect.on('disconnect', () => {
-          address.value = null;
-        });
-      }
-    } catch (_e) {
-      // ignore
-    }
-
-    const acc =
-      tonConnect?.account ||
-      tonConnect?.wallet?.account ||
-      tonConnect?.state?.account;
-    if (acc && acc.address) {
-      address.value = acc.address;
-      walletState.value = acc.address;
-    }
-  } catch (e) {
-    console.warn('TonConnect init failed', e);
-  }
-}
-
-async function connect() {
-  if (!tonConnect) {
-    await initTonConnect();
-    if (!tonConnect) {
-      alert(
-        'TonConnect UI not available. Please ensure @tonconnect/ui is installed',
-      );
-      return;
-    }
-  }
-  try {
-    // Try direct connect API if available
-    if (typeof tonConnect.connect === 'function') {
-      const res = await tonConnect.connect();
-      const addr =
-        res?.account?.address ||
-        tonConnect?.account?.address ||
-        tonConnect?.wallet?.account?.address ||
-        tonConnect?.state?.account?.address ||
-        null;
-      if (addr) {
-        address.value = addr;
-        const walletState = useState(
-          'walletAddress',
-          () => null as string | null,
-        );
-        walletState.value = addr;
-        return;
-      }
-    }
-
-    // Try various UI entry points used by different versions
-    if (typeof tonConnect.openUI === 'function') await tonConnect.openUI();
-    else if (typeof tonConnect.show === 'function') await tonConnect.show();
-    else if (tonConnect?.modal && typeof tonConnect.modal.open === 'function')
-      await tonConnect.modal.open();
-    else if (
-      tonConnect?.singleWalletModal &&
-      typeof tonConnect.singleWalletModal.open === 'function'
-    )
-      await tonConnect.singleWalletModal.open();
-    else if (typeof tonConnect.open === 'function') await tonConnect.open();
-
-    // If we reached here, UI was attempted to open — poll for address (fallback)
-    const waitForAddress = async (timeout = 15000) => {
-      const start = Date.now();
-      while (Date.now() - start < timeout) {
-        const candidate =
-          // possible locations where address may appear
-          tonConnect?.walletInfo?.address ||
-          tonConnect?.walletInfo?.wallet?.address ||
-          tonConnect?.connector?._wallet?.address ||
-          tonConnect?.connector?._wallet?.account?.address ||
-          tonConnect?.modal?.connector?._wallet?.address ||
-          tonConnect?.modal?.connector?._wallet?.account?.address ||
-          tonConnect?.account?.address ||
-          tonConnect?.wallet?.account?.address ||
-          tonConnect?.state?.account?.address ||
-          null;
-        if (candidate) return candidate;
-        await new Promise((r) => setTimeout(r, 500));
-      }
-      return null;
-    };
-
-    const found = await waitForAddress(15000);
-    if (found) {
-      address.value = found;
-      const walletState = useState(
-        'walletAddress',
-        () => null as string | null,
-      );
-      walletState.value = found;
-    }
-  } catch (e) {
-    console.warn('connect error', e);
-  }
-}
-
-function disconnect() {
-  try {
-    if (typeof tonConnect?.disconnect === 'function') tonConnect.disconnect();
-    else if (typeof tonConnect?.clear === 'function') tonConnect.clear();
-  } catch (e) {
-    console.warn('disconnect failed', e);
-  }
-  address.value = null;
-  const walletState = useState('walletAddress', () => null as string | null);
-  walletState.value = null;
-}
-
-function onClick() {
-  if (address.value) disconnect();
-  else connect();
-}
+const { shortAddress, isLoading, toggleConnection, init } = useWallet();
 
 onMounted(() => {
-  initTonConnect();
+  if (process.client) {
+    init();
+  }
 });
 </script>
 
 <template>
-  <button class="wallet-button" @click="onClick">
-    <span v-if="address">{{ shortAddress }}</span>
-    <span v-else>{{ shortAddress }}</span>
+  <button
+    class="wallet-button"
+    :class="{ 'wallet-button--loading': isLoading }"
+    :disabled="isLoading"
+    aria-label="Подключить кошелек"
+    @click="toggleConnection"
+  >
+    <span class="wallet-button__content">
+      <span v-if="isLoading" class="wallet-button__loader" aria-hidden="true" />
+      <span v-else class="wallet-button__text">
+        {{ shortAddress }}
+      </span>
+    </span>
   </button>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .wallet-button {
-  padding: 8px 12px;
-  margin: 30px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  --gradient-start: #8b5cf6;
+  --gradient-end: #ec4899;
+  --padding-x: 1.5rem;
+  --padding-y: 0.5rem;
+  --border-radius: 50px;
+  --transition-duration: 0.2s;
 
+  background: linear-gradient(
+    135deg,
+    var(--gradient-start) 0%,
+    var(--gradient-end) 100%
+  );
+  padding: var(--padding-y) var(--padding-x);
+  border-radius: var(--border-radius);
   color: white;
   border: none;
-  text-decoration: none;
-  position: absolute;
-  top: 0;
-  right: 0;
   font-weight: 500;
   cursor: pointer;
-  width: min-content;
   font-size: 1.1em;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  min-width: 160px;
+  min-height: 2rem;
+  transition: all var(--transition-duration) ease;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  user-select: none;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &--loading {
+    // position: relative;
+    color: transparent;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__text {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  &__loader {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .wallet-button {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin: 1rem auto;
+    display: block;
+    width: 100%;
+    max-width: 200px;
+  }
 }
 </style>
