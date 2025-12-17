@@ -1,8 +1,5 @@
 {
-  "name": "TON Starter Kit",
-  "short_name": "TON",
-  "description": "TonConnect manifest for TON Starter Kit",
-  "icons": ["/ton.svg"],
-  "start_url": "/",
-  "display": "standalone"
+  "url": "https://ton-starter-kit.vercel.app",
+  "name": "Ton Starter Kit",
+  "iconUrl": "https://ton-starter-kit.vercel.app/img/logo/ton_symbol.svg"
 }
