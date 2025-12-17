@@ -1,4 +1,3 @@
-// composables/useWallet.ts
 import type { TonConnectInstance } from '@/types-ton-connect';
 import { getConnector } from '@/ton-connect';
 
@@ -83,8 +82,6 @@ export const useWallet = () => {
       const connector = tonConnect.value;
       await connector.openModal();
 
-      await connector.openUI();
-
       // Ждем подключения с таймаутом
       const connectedAddress = await waitForConnection();
       if (connectedAddress) address.value = connectedAddress;
@@ -100,7 +97,7 @@ export const useWallet = () => {
     if (!tonConnect.value) return null;
 
     const start = Date.now();
-    const pollInterval = 500;
+    const pollInterval = 5000;
 
     while (Date.now() - start < timeout) {
       const candidate = extractAddress(tonConnect.value);
