@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getConnector } from '@/ton-connect';
+
 const address = ref<string | null>(null);
 let tonConnect: any = null;
 
@@ -41,7 +43,7 @@ async function initTonConnect() {
       address.value = acc.address;
       walletState.value = acc.address;
     }
-  } catch (_e) {
+  } catch (e) {
     console.warn('TonConnect init failed', e);
   }
 }
