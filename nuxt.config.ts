@@ -61,7 +61,9 @@ export default defineNuxtConfig({
   },
 
   devServer: {
-    port: 3030,
+    host: 'ton-starter-kit.vercel.app',
+    port: 443,
+    https: true,
   },
 
   typescript: {
@@ -76,7 +78,6 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    publicDir: resolve(__dirname, 'public'),
     css: {
       preprocessorOptions: {
         scss: {
@@ -95,6 +96,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    preset: 'vercel',
     publicAssets: [
       {
         baseURL: '/',

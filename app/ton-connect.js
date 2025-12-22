@@ -1,58 +1,30 @@
 import { TonConnectUI } from '@tonconnect/ui';
 
-class CustomEventDispatcher {
-  constructor(store) {
-    this.store = store;
-  }
+let _tonConnectUI = null;
 
-  async dispatchEvent(eventName, eventDetails) {
-    // Safe dispatcher that tolerates missing store and adapts to Vuex/Pinia
-    try {
-      if (!this.store) {
-        console.warn('TonConnect event (no store):', eventName, eventDetails);
-        return;
-      }
-
-      // If store has dispatch (Vuex), use it. For Pinia use actions or $patch externally.
-      if (typeof this.store.dispatch === 'function') {
-        // keep commented mapping for user to enable if needed
-        // this.store.dispatch('tk/handleTonConnectEvent', { type: eventName, payload: eventDetails })
-        return;
-      }
-
-      // If store exposes a method to handle events, try calling it
-      if (typeof this.store.handleTonConnectEvent === 'function') {
-        this.store.handleTonConnectEvent({
-          type: eventName,
-          payload: eventDetails,
-        });
-        return;
-      }
-
-      console.warn(`Unhandled TonConnect event: ${eventName}`);
-      console.log('TonConnect event details:', eventDetails);
-    } catch (err) {
-      console.warn('Error dispatching TonConnect event', err);
-    }
-  }
-}
-
-let connectorInstance = null;
-
-export const getConnector = (store = null) => {
+export const getTonConnectUI = async (options = {}) => {
   if (typeof window === 'undefined') return null;
 
-  if (!connectorInstance) {
-    connectorInstance = new TonConnectUI({
-      manifestUrl: `${window.location.origin}/tonconnect-manifest.json`,
-      eventDispatcher: new CustomEventDispatcher(store),
+  if (!_tonConnectUI) {
+    _tonConnectUI = new TonConnectUI({
+      manifestUrl:
+        options.manifestUrl ||
+        'https://ton-starter-kit.vercel.app/tonconnect-manifest.json',
+      uiPreferences: {
+        theme: 'DARK',
+        colorsSet: 'TON',
+        ...options.uiPreferences,
+      },
+      actionsConfiguration: {
+        twaReturnUrl: 'https://t.me/your_app_bot',
+        ...options.actionsConfiguration,
+      },
     });
-    console.log('connectorInstance', connectorInstance);
   }
 
-  return connectorInstance;
+  return _tonConnectUI;
 };
 
-export const resetConnector = () => {
-  connectorInstance = null;
+export const resetTonConnectUI = () => {
+  _tonConnectUI = null;
 };

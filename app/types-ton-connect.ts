@@ -32,7 +32,7 @@ export type TonConnectInstance = {
   on: (event: string, callback: (payload: any) => void) => void;
   connect: () => Promise<any>;
   disconnect: () => void;
-  openUI: () => Promise<void>;
+  openModal: () => Promise<void>;
   show: () => Promise<void>;
   open: () => Promise<void>;
   clear: () => void;
