@@ -1,14 +1,6 @@
 <!-- components/WalletButton.vue -->
 <script setup lang="ts">
-import { useWallet } from '@/composables/useWallet';
-
-const { shortAddress, isLoading, toggleConnection, init } = useWallet();
-
-onMounted(() => {
-  if (process.client) {
-    init();
-  }
-});
+const { shortAddress, isLoading, toggleConnection } = useWallet();
 </script>
 
 <template>

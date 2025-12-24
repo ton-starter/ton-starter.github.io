@@ -60,6 +60,9 @@ export default defineNuxtConfig({
     },
   },
 
+  // devServer: {
+  //   port: 3030,
+  // },
   devServer: {
     host: 'ton-starter-kit.vercel.app',
     port: 443,
