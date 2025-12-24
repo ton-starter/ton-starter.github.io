@@ -96,7 +96,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'vercel',
+    // preset: 'vercel',
     publicAssets: [
       {
         baseURL: '/',

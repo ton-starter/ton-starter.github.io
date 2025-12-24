@@ -45,11 +45,10 @@ const navigationCards = navLinks as navCard[];
 </template>
 
 <style lang="scss">
-.el-col {
-  margin-bottom: 30px;
-}
-
 .custom-menu-grid {
+  .el-col {
+    margin-bottom: 30px;
+  }
   .custom-card {
     border-radius: 15px;
     box-shadow: none;

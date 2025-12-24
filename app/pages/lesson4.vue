@@ -327,6 +327,7 @@ const summary = ref(summaryData);
         gap: 1em;
         flex-wrap: wrap;
         .feature-card {
+          flex-direction: column;
           .feature-header {
             display: flex;
             gap: $spacing-md;
