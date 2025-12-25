@@ -20,15 +20,20 @@ export default defineNuxtConfig({
   css: ['~/assets/styles/global.scss'],
 
   modules: [
-    '@nuxt/test-utils',
     '@element-plus/nuxt',
-    '@nuxtjs/i18n',
-    'v-gsap-nuxt',
     '@nuxt/content',
+    '@nuxtjs/i18n',
+    '@nuxt/test-utils',
+    'v-gsap-nuxt',
   ],
 
   elementPlus: {
+    // cache: true,
     importStyle: 'scss',
+    defaultLocale: 'en',
+    imports: [['useLocale', 'es/hooks/use-locale/index.mjs']],
+    // themes: ['dark'], ?
+    injectionID: { prefix: 100, current: 1 }, // ?
   },
 
   components: [

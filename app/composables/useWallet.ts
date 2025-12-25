@@ -1,4 +1,3 @@
-// app/composables/useWallet.ts
 import type { TonConnectUI, Wallet } from '@tonconnect/ui';
 import type { Account } from '@tonconnect/sdk';
 import { getTonConnectUI, resetTonConnectUI } from '@/ton-connect';
@@ -107,29 +106,29 @@ export const useWallet = () => {
     }
   };
 
-  const reconnect = async (): Promise<boolean> => {
-    try {
-      const ui = await initTonConnect();
-      if (!ui) return false;
+  // const reconnect = async (): Promise<boolean> => {
+  //   try {
+  //     const ui = await initTonConnect();
+  //     if (!ui) return false;
 
-      const wallet = ui.wallet;
-      if (wallet?.account) {
-        const address = getAddressFromAccount(wallet.account);
-        state.value = {
-          address,
-          account: wallet.account,
-          walletInfo: wallet,
-          isConnected: true,
-          isLoading: false,
-        };
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.error('Reconnect failed:', error);
-      return false;
-    }
-  };
+  //     const wallet = ui.wallet;
+  //     if (wallet?.account) {
+  //       const address = getAddressFromAccount(wallet.account);
+  //       state.value = {
+  //         address,
+  //         account: wallet.account,
+  //         walletInfo: wallet,
+  //         isConnected: true,
+  //         isLoading: false,
+  //       };
+  //       return true;
+  //     }
+  //     return false;
+  //   } catch (error) {
+  //     console.error('Reconnect failed:', error);
+  //     return false;
+  //   }
+  // };
 
   const resetState = () => {
     state.value = {
@@ -152,13 +151,6 @@ export const useWallet = () => {
     await tonConnectUI.value.sendTransaction(transaction);
   };
 
-  // Auto-reconnect on client side
-  onMounted(async () => {
-    if (process.client) {
-      await reconnect();
-    }
-  });
-
   return {
     address: readonly(address),
     shortAddress,
@@ -166,6 +158,7 @@ export const useWallet = () => {
     isLoading,
     account: readonly(account),
     walletInfo: readonly(walletInfo),
+    initTonConnect,
     connect,
     disconnect,
     toggleConnection,

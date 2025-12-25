@@ -2,14 +2,22 @@
 
 <template>
   <div class="copyrights-line show-flex flex-between">
-    <span> © 2025 TON Starter Guide. </span> &nbsp; &nbsp; &nbsp;
-    <a
-      href="https://github.com/ton-starter/ton-starter.github.io/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      &lt; <IconGithub /> /&gt;
-    </a>
+    <el-text size="large">
+      <span> © 2025 TON Starter Guide. </span> &nbsp; &nbsp; &nbsp;
+    </el-text>
+    <el-text size="small">
+      <NuxtLink
+        to="https://github.com/ton-starter/ton-starter.github.io"
+        target="_blank"
+      >
+        &nbsp; &lt;<IconGithub />/&gt; &nbsp;
+      </NuxtLink>
+    </el-text>
+    <el-row>
+      <el-link href="/el-playground-demo" type="primary">
+        <ElIconElementPlus /> element-plus-demo
+      </el-link>
+    </el-row>
   </div>
 </template>
 
