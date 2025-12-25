@@ -13,6 +13,7 @@ const steps = ref([
       { text: 'Урок 2', to: '/lesson2' },
       { text: 'Урок 3', to: '/lesson3' },
       { text: 'Урок 4', to: '/lesson4' },
+      { text: 'Урок 5', to: '/lesson/005-tokens' },
     ],
     icon: '📚',
     gradient: 'linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)',

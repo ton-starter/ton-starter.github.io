@@ -16,7 +16,7 @@ export const getTonConnectUI = async (options = {}) => {
         ...options.uiPreferences,
       },
       actionsConfiguration: {
-        twaReturnUrl: 'https://t.me/your_app_bot',
+        twaReturnUrl: 'https://t.me/app_bot',
         ...options.actionsConfiguration,
       },
     });

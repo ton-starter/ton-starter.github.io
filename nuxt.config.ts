@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     '@element-plus/nuxt',
     '@nuxtjs/i18n',
     'v-gsap-nuxt',
+    '@nuxt/content',
   ],
 
   elementPlus: {
