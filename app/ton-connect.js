@@ -3,7 +3,9 @@ import { TonConnectUI } from '@tonconnect/ui';
 let _tonConnectUI = null;
 
 export const getTonConnectUI = async (options = {}) => {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === 'undefined') {
+    throw new Error('TonConnectUI can only be used on client side');
+  }
 
   if (!_tonConnectUI) {
     _tonConnectUI = new TonConnectUI({
